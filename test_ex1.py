@@ -1,5 +1,5 @@
 import unittest
-from ex1 import *
+from ex1 import Perceptron,Gates
 
 class Test_Perceptron(unittest.TestCase):
     def test_AND(self):
@@ -22,7 +22,6 @@ class Test_Perceptron(unittest.TestCase):
         self.assertEqual(NAND_Perceptron.run([0, 1]), 1)
         self.assertEqual(NAND_Perceptron.run([0, 0]), 1)
 
-class Test_Perceptron(unittest.TestCase):
     def test_Summing_Number_Gate(self):
         self.assertEqual(Gates().Summing_Numbers(1, 1), (1, 0))
         self.assertEqual(Gates().Summing_Numbers(1, 0), (0, 1))

@@ -1,5 +1,5 @@
 from random import random,randint
-from ex1 import *
+from ex1 import Perceptron
 P = Perceptron()
 P.random_init(2)
 def example_learn(P):
