@@ -1,5 +1,5 @@
 import numpy as np
-import random
+from random import randint
 class Perceptron:
     def __init__(self,w=[],b=0,lr=0.1):
         self.w=w
@@ -24,8 +24,8 @@ class Perceptron:
         self.w=[]
         self.b=0
         for x in range(0,large):
-            self.w.append(random.randint(-2,2))
-        self.b = (random.randint(-2,2))
+            self.w.append(randint(-2,2))
+        self.b = (randint(-2,2))
 
 class Gates:
     def __init__(self):
