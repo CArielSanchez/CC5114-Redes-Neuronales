@@ -1,7 +1,30 @@
 from random import random,randint
 from perceptron import Perceptron
 
-##
+class Perceptron_Gym(self, func)
+
+    def __init__(self):
+        self.func=func
+        
+    def training_(self,P)
+        x=randint(-100,100)
+        y=randint(-100,100)
+        r = self.func(x)
+        if y>r:
+            P.learn(0,1,[x,y])
+        if y<r:
+            P.learn(1,0,[x,y])
+
+    def exam_(P):
+        x=randint(-50,50)
+        y=randint(-50,50)
+        r=P.run([x,y])
+        if(y > x*2):
+            return int(r==1)                
+        else:
+            return int(r==0)
+
+
 def f_lin(x,mult,sum):
     return x*mult+sum
 ##
