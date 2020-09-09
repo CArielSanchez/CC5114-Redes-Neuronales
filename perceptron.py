@@ -6,6 +6,24 @@ class Perceptron:
         self.b=b
         self.lr=lr
         self.large=len(w)
+    def set_lr(self,lr):
+        self.lr=lr
+    def set_b(self,b):
+        self.b=b
+    def set_w(self,w):
+        self.w=w
+
+    def random_init(self,large):
+        self.large=large
+        w=[]
+        for x in range(0,large):
+            w.append(randint(-2,2))
+        b = (randint(-2,2))
+        self.set_b(b)
+        self.set_w(w)
+
+    
+    #Ejecuta un perceptron
     def run(self,input):
         #Multiplica el input con sus pesos
         w_mult_input= np.multiply(self.w,input)
@@ -14,22 +32,13 @@ class Perceptron:
             return 1
         else:
             return 0
+
     def learn(self,real_output,disered_output,input):
         diff=disered_output-real_output
         self.w = np.add(self.w , (np.array(input) * self.lr * diff))
         self.b= self.b + (self.lr * diff)
 
-    def random_init(self,large):
-        self.large=large
-        self.w=[]
-        self.b=0
-        for x in range(0,large):
-            self.w.append(randint(-2,2))
-        self.b = (randint(-2,2))
-    
-    def set_lr(self,lr):
-        self.lr=lr
-
+  
 
 class Gates:
     def __init__(self):
@@ -44,4 +53,3 @@ class Gates:
         r_sum = self.NAND.run([second_flag_a,second_flag_b])
         r_carry_bit = self.NAND.run([first_flag,first_flag])
         return(r_carry_bit,r_sum)
-print(int(0==1))

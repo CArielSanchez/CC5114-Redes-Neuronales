@@ -1,5 +1,6 @@
 from random import random,randint
 from perceptron import Perceptron
+
 ##
 def f_lin(x,mult,sum):
     return x*mult+sum
@@ -27,7 +28,7 @@ def testing_1(P):
             
 
 ############################################ Exp ###############################################################################
-def exp(n_training,n_test,p_lr=0.1):
+def presition(n_training,n_test,p_lr=0.1):
     idem=0
     
     ##Crear un perceptron aleatorizado
@@ -43,10 +44,13 @@ def exp(n_training,n_test,p_lr=0.1):
         n_test -= 1
         idem += testing_1(P)
     return idem
-n=1000
-c=0
-while(n):
-    n-=1
-    c+=exp(1,100)                
-print(c/1000)
-    
+
+def average_presition(n_iterations,n_training,n_test=100):
+    c=0
+    div=n_iterations
+    while(n_iterations):
+        n_iterations-=1
+        c+=presition(n_training,n_test)                
+    return(c/div)
+print(average_presition(100,1000,100))
+
