@@ -1,5 +1,5 @@
 import unittest
-from ex1 import Perceptron,Gates
+from perceptron import Perceptron,Gates
 
 class Test_Perceptron(unittest.TestCase):
     def test_AND(self):

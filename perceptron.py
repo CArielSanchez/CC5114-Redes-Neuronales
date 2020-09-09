@@ -26,6 +26,10 @@ class Perceptron:
         for x in range(0,large):
             self.w.append(randint(-2,2))
         self.b = (randint(-2,2))
+    
+    def set_lr(self,lr):
+        self.lr=lr
+
 
 class Gates:
     def __init__(self):
@@ -40,4 +44,4 @@ class Gates:
         r_sum = self.NAND.run([second_flag_a,second_flag_b])
         r_carry_bit = self.NAND.run([first_flag,first_flag])
         return(r_carry_bit,r_sum)
-
+print(int(0==1))
