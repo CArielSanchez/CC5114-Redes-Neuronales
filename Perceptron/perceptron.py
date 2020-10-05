@@ -1,5 +1,7 @@
 import numpy as np
 from random import randint
+#Create a perceptron:
+#opcional weigth,bias and lr(weigth of learning)
 class Perceptron:
     def __init__(self,w=[],b=0,lr=0.1):
         self.w=w
@@ -13,6 +15,8 @@ class Perceptron:
     def set_w(self,w):
         self.w=w
 
+    #Set a perceptron on ramdom values
+    #large: large of the input recived for the perceptron.
     def random_init(self,large):
         self.large=large
         w=[]
@@ -24,6 +28,7 @@ class Perceptron:
 
     
     #Ejecuta un perceptron
+    #input: data recived by the perceptron
     def run(self,input):
         #Multiplica el input con sus pesos
         w_mult_input= np.multiply(self.w,input)
@@ -32,7 +37,10 @@ class Perceptron:
             return 1
         else:
             return 0
-
+    #Algoritm of learning
+    #real_output: ouput real
+    #disered_output: output disered
+    #input: data recived by the perceptron
     def learn(self,real_output,disered_output,input):
         diff=disered_output-real_output
         self.w = np.add(self.w , (np.array(input) * self.lr * diff))
