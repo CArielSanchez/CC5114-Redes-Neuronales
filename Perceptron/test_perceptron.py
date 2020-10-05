@@ -1,6 +1,6 @@
 import unittest
-from perceptron import Perceptron,Gates
-
+from perceptron import *
+#Testea diferentes perceptrones.
 class Test_Perceptron(unittest.TestCase):
     def test_AND(self):
         AND_Perceptron = Perceptron([1, 1], -1.5)

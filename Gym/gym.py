@@ -1,9 +1,9 @@
-from random import random,randint
-from perceptron import Perceptron
 
-#Create a Gym to train a Perceptron
+
+
+#Create a Gym to train a Perceptron or similars
 ##data_training: data for the training of the perceptron.
-class Perceptron_Gym:
+class Gym:
 
     def __init__(self,data_training):
         self.data=data_training

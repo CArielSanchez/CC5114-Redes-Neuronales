@@ -1,7 +1,6 @@
-from perceptron_gym import Perceptron_Gym 
-from random import randint
-from perceptron import Perceptron
-
+import __init__
+from gym import Gym 
+from Perceptron.perceptron import * 
 ###Generate binary pairs, to be evaluated on diferents functions.
 # name_func: Recive the type of the function "and,or,nand"
 # iterations: number of data disired
@@ -50,7 +49,7 @@ n=1000
 for i in range(0,n):
     data3.append(gen_data(lambda x: x + 10,1000))
 
-Gym_P = Perceptron_Gym(data1)
+Gym_P = Gym(data1)
 Gym_P.training_(P)
 j=Gym_P.general_exam(P,data2)
 av=Gym_P.average_exam(P,data3)
