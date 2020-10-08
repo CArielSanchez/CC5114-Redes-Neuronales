@@ -3,6 +3,8 @@ import numpy as np
 def sigmoid(z):
 	return 1/(1 + np.exp(-z))
 
+
+
 # Produce a neural network randomly initialized
 def initialize_parameters(n_x, n_h, n_y):
 	W1 = np.random.randn(n_h, n_x)
@@ -42,13 +44,13 @@ def forward_prop(X, parameters):
 
 # Evaluate the error (i.e., cost) between the prediction made in A2 and the provided labels Y 
 # We use the Mean Square Error cost function
-def calculate_cost(A2, Y):
+def calculate_cost(A2, Y,m):
   # m is the number of examples
   cost = np.sum((0.5 * (A2 - Y) ** 2).mean(axis=1))/m
   return cost
 
 # Apply the backpropagation
-def backward_prop(X, Y, cache, parameters):
+def backward_prop(X, Y, cache, parameters,m):
   A1 = cache["A1"]
   A2 = cache["A2"]
 
@@ -105,11 +107,12 @@ def update_parameters(parameters, grads, learning_rate):
 # n_h: number of neurons in the hidden layer
 # n_y: number of neurons in the output layer (this value impacts how Y is shaped)
 def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
+  m = X.shape[1]
   parameters = initialize_parameters(n_x, n_h, n_y)
   for i in range(0, num_of_iters+1):
     a2, cache = forward_prop(X, parameters)
-    cost = calculate_cost(a2, Y)
-    grads = backward_prop(X, Y, cache, parameters)
+    cost = calculate_cost(a2, Y,m)
+    grads = backward_prop(X, Y, cache, parameters,m)
     parameters = update_parameters(parameters, grads, learning_rate)
     if(i%100 == 0):
       print('Cost after iteration# {:d}: {:f}'.format(i, cost))
@@ -131,8 +134,10 @@ def predict(X, parameters):
 
   return y_predict
 
+
 # Set the seed to make result reproducible
 np.random.seed(42)
+
 
 # The 4 training examples by columns
 X = np.array([[0, 0, 1, 1],
@@ -142,7 +147,7 @@ X = np.array([[0, 0, 1, 1],
 Y = np.array([[0, 1, 1, 0]])
 
 # No. of training examples
-m = X.shape[1]
+#m = X.shape[1]
 
 # Set the hyperparameters
 n_x = 2     #No. of neurons in first layer
@@ -160,6 +165,7 @@ trained_parameters = model(X, Y, n_x, n_h, n_y, number_of_iterations, learning_r
 # You can try any of those: (0, 0), (0, 1), (1, 0), (1, 1)
 X_test = np.array([[0], [1]])
 y_predict = predict(X_test, trained_parameters)
+
 
 # Print the result
 print('Neural Network prediction for example ({:d}, {:d}) is {:d}'.format(
