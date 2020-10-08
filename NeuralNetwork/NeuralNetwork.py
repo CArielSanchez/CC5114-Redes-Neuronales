@@ -134,7 +134,7 @@ def predict(X, parameters):
 
   return y_predict
 
-
+'''
 # Set the seed to make result reproducible
 np.random.seed(42)
 
@@ -147,7 +147,7 @@ X = np.array([[0, 0, 1, 1],
 Y = np.array([[0, 1, 1, 0]])
 
 # No. of training examples
-#m = X.shape[1]
+m = X.shape[1]
 
 # Set the hyperparameters
 n_x = 2     #No. of neurons in first layer
@@ -170,3 +170,4 @@ y_predict = predict(X_test, trained_parameters)
 # Print the result
 print('Neural Network prediction for example ({:d}, {:d}) is {:d}'.format(
     X_test[0][0], X_test[1][0], y_predict))
+'''
