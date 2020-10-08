@@ -1,5 +1,8 @@
 import numpy as np
 
+cost_iteration_data=[]
+
+
 def sigmoid(z):
 	return 1/(1 + np.exp(-z))
 
@@ -108,14 +111,22 @@ def update_parameters(parameters, grads, learning_rate):
 # n_y: number of neurons in the output layer (this value impacts how Y is shaped)
 def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
   m = X.shape[1]
+
+  cost_list=[]
+  i_list=[]
+
   parameters = initialize_parameters(n_x, n_h, n_y)
   for i in range(0, num_of_iters+1):
     a2, cache = forward_prop(X, parameters)
     cost = calculate_cost(a2, Y,m)
     grads = backward_prop(X, Y, cache, parameters,m)
     parameters = update_parameters(parameters, grads, learning_rate)
-    if(i%100 == 0):
-      print('Cost after iteration# {:d}: {:f}'.format(i, cost))
+    #if(i%100 == 0):
+      #print('Cost after iteration# {:d}: {:f}'.format(i, cost))
+    cost_list.append(cost)
+    i_list.append(i)
+  cost_iteration_data.append(cost_list)
+  cost_iteration_data.append(i_list)
 
   return parameters
 
@@ -134,7 +145,7 @@ def predict(X, parameters):
 
   return y_predict
 
-'''
+
 # Set the seed to make result reproducible
 np.random.seed(42)
 
@@ -170,4 +181,3 @@ y_predict = predict(X_test, trained_parameters)
 # Print the result
 print('Neural Network prediction for example ({:d}, {:d}) is {:d}'.format(
     X_test[0][0], X_test[1][0], y_predict))
-'''
