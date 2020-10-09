@@ -110,7 +110,7 @@ def update_parameters(parameters, grads, learning_rate):
 # n_h: number of neurons in the hidden layer
 # n_y: number of neurons in the output layer (this value impacts how Y is shaped)
 def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
-  m = X.shape[1]
+  m = X.shape[1] # No. of training examples
 
   cost_list=[]
   i_list=[]

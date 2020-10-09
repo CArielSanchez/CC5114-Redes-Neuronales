@@ -1,5 +1,5 @@
 import __init__
-import NeuralNetwork.NeuralNetwork
+import NeuralNetwork.NeuralNetwork as nn
 
 #For ploting
 import matplotlib.pyplot as plt
@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 #For data procesing to read csv files
 import pandas as pd
 
+#Auxiliar functions
 def normalization(dataset):
     for column in dataset.columns:##ver como sacar columna
         dh = dataset[column].max()
@@ -16,7 +17,40 @@ def normalization(dataset):
         dataset[column] = dataset[column].apply(lambda x: (((x-dl)*(nh-nl))/(dh-dl))+nl) #funcionde normalizacion
     return dataset
 
+def matrixConfusion(Y_predicted,Y_expected):
+     
+    #Predicted Raining and Raining corrects (equals)
+    raining00 = 0
+    #Predicted Raining positive and Not Raining
+    raining01 = 0
+    #Predicted raining negative and Raining
+    raining10 = 0
+    #Predicted raining negative and Not Raining (equals)
+    raining11 = 0
 
+    for x in range(len(Y_predicted)):
+        if Y_predicted[x] == Y_expected[x]:
+            if Y_predicted[x] == 1:
+                raining00+=1
+            else:
+                raining11+=1
+        else:
+            if Y_predicted[x] == 1:
+                raining01+=1
+            else:
+                raining10+=1
+
+
+    df = pd.DataFrame({'.':['Predicted Raining', 'Predicted Not Raining','Total Expected'], 
+    'Raining':[raining00,raining01,(raining00+raining01)],
+    'Not Raining':[raining10,raining11,(raining10+raining11)], 
+    'Total Predicted':[(raining00+raining10),(raining01+raining11),' ']}, 
+    columns = ['.','Raining', 'Not Raining','Total Predicted'])
+
+    print(df)
+    return df
+
+#Load dataset
 
 dataset = pd.read_csv('Tarea1/weatherAUS.csv')
 
@@ -35,18 +69,35 @@ categorical = ['WindGustDir','WindDir9am','WindDir3pm']
 
 dataset = pd.get_dummies(dataset,columns = categorical,drop_first=True)
 
-
-
 dataset=normalization(dataset)
 
-print(dataset.head())
+#Dividimos el dataset
 
-for column in dataset.columns:##ver como sacar columna
-        print(column)
-        print(dataset[column].max())
-        print(dataset[column].min())
-        print('/n')
+porcentaje = 0.8
+dataTrain = dataset[:int((len(dataset))*0.8)]
+dataTest = dataset[int((len(dataset))*0.8):]
 
 
+#Input y Output
+
+x_train = dataTrain.drop(labels = ['RainTomorrow'],axis = 1).to_numpy()
+y_train = dataTrain['RainTomorrow'].to_numpy()
 
 
+print(y_train)
+
+x_test = dataTest.drop(labels = ['RainTomorrow'],axis = 1)
+y_test = dataTest['RainTomorrow']
+# Set the hyperparameters
+n_x = len(x_train[0])     #No. of neurons in first layer
+n_h = 2*n_x    #No. of neurons in hidden layer
+n_y = 1     #No. of neurons in output layer
+
+print(n_x)
+#The number of times the model has to learn the dataset
+number_of_iterations = 10000
+learning_rate = 0.01
+
+#trained_parameters = nn.model(x_train, y_train, n_x, n_h, n_y, number_of_iterations, learning_rate)
+
+matrixConfusion([1,0,0],[0,0,1])
