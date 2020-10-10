@@ -1,5 +1,6 @@
 import __init__
 import NeuralNetwork.NeuralNetwork as nn
+import numpy as np
 
 #For ploting
 import matplotlib.pyplot as plt
@@ -84,10 +85,11 @@ x_train = dataTrain.drop(labels = ['RainTomorrow'],axis = 1).to_numpy()
 y_train = dataTrain['RainTomorrow'].to_numpy()
 
 
-print(y_train)
+print(x_train)
 
-x_test = dataTest.drop(labels = ['RainTomorrow'],axis = 1)
-y_test = dataTest['RainTomorrow']
+x_test = dataTest.drop(labels = ['RainTomorrow'],axis = 1).to_numpy()
+y_test = dataTest['RainTomorrow'].to_numpy()
+
 # Set the hyperparameters
 n_x = len(x_train[0])     #No. of neurons in first layer
 n_h = 2*n_x    #No. of neurons in hidden layer
@@ -95,9 +97,17 @@ n_y = 1     #No. of neurons in output layer
 
 print(n_x)
 #The number of times the model has to learn the dataset
-number_of_iterations = 10000
+number_of_iterations = 100
 learning_rate = 0.01
 
-#trained_parameters = nn.model(x_train, y_train, n_x, n_h, n_y, number_of_iterations, learning_rate)
+trained_parameters = nn.model(np.transpose(x_train), y_train, n_x, n_h, n_y, number_of_iterations, learning_rate)
+
+
+probando = np.transpose(x_test[0])
+
+y_predict = nn.predict(probando, trained_parameters)
+
+print('Neural Network prediction for example ({:d}, {:d}) is {:d}'.format(
+    x_test[0], y_test[0], y_predict))
 
 matrixConfusion([1,0,0],[0,0,1])

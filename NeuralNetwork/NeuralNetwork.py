@@ -123,8 +123,8 @@ def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
     cost = calculate_cost(a2, Y,m)
     grads = backward_prop(X, Y, cache, parameters,m)
     parameters = update_parameters(parameters, grads, learning_rate)
-    #if(i%100 == 0):
-      #print('Cost after iteration# {:d}: {:f}'.format(i, cost))
+    if(i%100 == 0):
+      print('Cost after iteration# {:d}: {:f}'.format(i, cost))
     cost_list.append(cost)
     i_list.append(i)
   cost_iteration_data.append(cost_list)
@@ -139,6 +139,8 @@ def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
 def predict(X, parameters):
   a2, cache = forward_prop(X, parameters)
   yhat = a2
+
+  print(yhat)
   yhat = np.squeeze(yhat)
   if(yhat >= 0.5):
     y_predict = 1
