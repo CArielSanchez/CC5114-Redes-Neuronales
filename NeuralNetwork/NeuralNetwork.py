@@ -9,6 +9,7 @@ def sigmoid(z):
 
 
 # Produce a neural network randomly initialized
+#To do: revision matriz n° bias y w
 def initialize_parameters(n_x, n_h, n_y):
 	W1 = np.random.randn(n_h, n_x)
 	b1 = np.zeros((n_h, 1))
@@ -37,6 +38,7 @@ def forward_prop(X, parameters):
   # Z value for Layer 2
   Z2 = np.dot(W2, A1) + b2
   # Activation value for Layer 2
+
   A2 = sigmoid(Z2)
 
   cache = {
@@ -110,15 +112,16 @@ def update_parameters(parameters, grads, learning_rate):
 # n_h: number of neurons in the hidden layer
 # n_y: number of neurons in the output layer (this value impacts how Y is shaped)
 def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
-
+  
   cost_iteration_data=[]
   m = X.shape[1] # No. of training examples
-
+  
   cost_list=[]
   i_list=[]
 
   parameters = initialize_parameters(n_x, n_h, n_y)
   for i in range(0, num_of_iters+1):
+    print(i)
     a2, cache = forward_prop(X, parameters)
     cost = calculate_cost(a2, Y,m)
     grads = backward_prop(X, Y, cache, parameters,m)
@@ -137,9 +140,13 @@ def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
 # parameters: represents a model
 # the result is the prediction
 def predict(X, parameters):
+  
+  print('parameters' + str(parameters))
   a2, cache = forward_prop(X, parameters)
   yhat = a2
+  print(yhat)
   yhat = np.squeeze(yhat)
+  print(yhat)
   if(yhat >= 0.5):
     y_predict = 1
   else:
@@ -147,11 +154,11 @@ def predict(X, parameters):
 
   return y_predict
 
-'''
+
 # Set the seed to make result reproducible
 np.random.seed(42)
 
-
+'''
 # The 4 training examples by columns
 X = np.array([[0, 0, 1, 1],
               [0, 1, 0, 1]])
