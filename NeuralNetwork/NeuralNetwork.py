@@ -1,8 +1,5 @@
 import numpy as np
 
-cost_iteration_data=[]
-
-
 def sigmoid(z):
 	return 1/(1 + np.exp(-z))
 
@@ -30,11 +27,11 @@ def forward_prop(X, parameters):
   b1 = parameters["b1"]
   W2 = parameters["W2"]
   b2 = parameters["b2"]
-
   # Z value for Layer 1
   Z1 = np.dot(W1, X) + b1
   # Activation value for Layer 1
   A1 = np.tanh(Z1)
+
   # Z value for Layer 2
   Z2 = np.dot(W2, A1) + b2
   # Activation value for Layer 2
@@ -133,7 +130,7 @@ def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
   cost_iteration_data.append(cost_list)
   cost_iteration_data.append(i_list)
 
-  return parameters
+  return parameters,cost_iteration_data
 
 # Make a prediction
 # X: represents the inputs
@@ -141,12 +138,10 @@ def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
 # the result is the prediction
 def predict(X, parameters):
   
-  print('parameters' + str(parameters))
   a2, cache = forward_prop(X, parameters)
   yhat = a2
-  print(yhat)
   yhat = np.squeeze(yhat)
-  print(yhat)
+
   if(yhat >= 0.5):
     y_predict = 1
   else:

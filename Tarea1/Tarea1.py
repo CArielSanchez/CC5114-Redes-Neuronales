@@ -100,40 +100,25 @@ x_train=np.transpose(x_train)
 
 # Set the hyperparameters
 n_x = len(x_train)     #No. of neurons in first layer
-n_h = 4  #No. of neurons in hidden layer
+n_h = n_x  #No. of neurons in hidden layer
 n_y = 1     #No. of neurons in output layer
 
 
 
 #The number of times the model has to learn the dataset
-number_of_iterations = 10
+number_of_iterations = 1000
 learning_rate = 0.1
 
-trained_parameters = nn.model(x_train, y_train, n_x, n_h, n_y, number_of_iterations, learning_rate)
-
+trained_parameters , data_plot = nn.model(x_train, y_train, n_x, n_h, n_y, number_of_iterations, learning_rate)
+#last_prediction_cost(data_plot)
 predicted_p=[]
-'''
+c=0
 for x in x_test:
-    
-    predicted_parameters = nn.predict(x, trained_parameters)
+    c+=1
+    print(c)
+    data_predict=np.transpose(np.array([x]))
+    predicted_parameters = nn.predict(data_predict, trained_parameters)
     predicted_p.append(predicted_parameters)
-print(len(y_test))
-print(len(predicted_p))
-'''
 
-predicted_parameters = nn.predict(x_test[0], trained_parameters)
-
-'''
-uno=0
-for y in y_test:
-    if(y==1):
-        uno+=1
-uno2=0
-for y in predicted_p:
-    if(y==1):
-        uno2+=1
-print(uno)
-print(uno2)
 
 matrixConfusion(predicted_p,y_test)
-'''
