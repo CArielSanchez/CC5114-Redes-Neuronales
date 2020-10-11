@@ -49,7 +49,18 @@ def forward_prop(X, parameters):
 def calculate_cost(A2, Y,m):
   # m is the number of examples
   cost = np.sum((0.5 * (A2 - Y) ** 2).mean(axis=1))/m
-  return cost
+  sub_a2=np.squeeze(A2)
+  sub_y=sub_a2-Y
+  
+  
+  
+  c=0
+  for x in sub_y:
+    
+    if(abs(x)<0.5):
+      c+=1
+  accuracy=c/m
+  return cost,accuracy
 
 # Apply the backpropagation
 def backward_prop(X, Y, cache, parameters,m):
@@ -113,21 +124,25 @@ def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
   cost_iteration_data=[]
   m = X.shape[1] # No. of training examples
   
+
   cost_list=[]
+  accuracy_list=[]
   i_list=[]
 
   parameters = initialize_parameters(n_x, n_h, n_y)
   for i in range(0, num_of_iters+1):
     print(i)
     a2, cache = forward_prop(X, parameters)
-    cost = calculate_cost(a2, Y,m)
+    cost,accuracy = calculate_cost(a2, Y,m)
     grads = backward_prop(X, Y, cache, parameters,m)
     parameters = update_parameters(parameters, grads, learning_rate)
     #if(i%100 == 0):
       #print('Cost after iteration# {:d}: {:f}'.format(i, cost))
     cost_list.append(cost)
+    accuracy_list.append(accuracy)
     i_list.append(i)
   cost_iteration_data.append(cost_list)
+  cost_iteration_data.append(accuracy_list)
   cost_iteration_data.append(i_list)
 
   return parameters,cost_iteration_data
