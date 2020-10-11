@@ -9,7 +9,15 @@ import pandas as pd
 
 #Auxiliar functions
 def last_prediction_cost(data):
-    plt.plot(data[1],data[0],'ro')
+    plt.plot(data[2],data[0],'ro')
+    plt.title("MSE vs EPOCH")
+    plt.xlabel("N°EPOCH")
+    plt.ylabel("MSE")
+    plt.show()
+    plt.plot(data[2],data[1],'ro')
+    plt.title("ACCURACY vs EPOCH")
+    plt.xlabel("N°EPOCH")
+    plt.ylabel("ACCURACY")
     plt.show()
     return 0
 
@@ -105,11 +113,11 @@ n_y = 1     #No. of neurons in output layer
 
 
 #The number of times the model has to learn the dataset
-number_of_iterations = 1000
-learning_rate = 0.1
+number_of_iterations = 10000
+learning_rate = 0.01
 
 trained_parameters , data_plot = nn.model(x_train, y_train, n_x, n_h, n_y, number_of_iterations, learning_rate)
-#last_prediction_cost(data_plot)
+last_prediction_cost(data_plot)
 predicted_p=[]
 c=0
 for x in x_test:
