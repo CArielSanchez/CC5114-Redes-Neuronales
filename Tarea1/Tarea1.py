@@ -20,7 +20,7 @@ def normalization(dataset):
         dl = dataset[column].min()
         nh = 1
         nl = 0
-        dataset[column] = dataset[column].apply(lambda x: (((x-dl)*(nh-nl))/(dh-dl))+nl) #funcionde normalizacion
+        dataset[column] = dataset[column].apply(lambda x: (((x-dl)*(nh-nl))/(dh-dl))+nl) #funcion de normalizacion
     return dataset
 
 def matrixConfusion(Y_predicted,Y_expected):
