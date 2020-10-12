@@ -3,6 +3,9 @@
 ## Lluvia en Australia Mañana
 El link de github que contiene este Readme con sus imagenes se encuentra en:
 https://github.com/CArielSanchez/CC5114-Redes-Neuronales/tree/master/Tarea1
+Integrantes:
+- Valentín Espina
+- Cristian Sánchez
 ## Dataset
 
 El dataset se encuentra en https://www.kaggle.com/jsphyg/weather-dataset-rattle-package, el cual tiene una extension de. Este dataset contiene las observaciones sobre el clima diario en numerosas estaciones de clima en Australia. Ademas contiene una variable que dice si llovió el día siguiente al guardado por la estacion. 
