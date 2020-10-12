@@ -14,11 +14,9 @@ Luego procedimos a normalizar los datos con la función:
 
 ![Normalization](imgs\normalization.png) 
 
- 
+, donde **x** es el valor de la celda; **nh** el valor superior de la normalización, en nuestro caso 1; **nl** el valor inferior de la normalización, en nuestro caso 0; **dh** el valor máximo de la columna en donde se encuentra **x**; y **dl** el valor minimo de la columna donde se encuentra **x**.
 
-, donde $x$ es el valor de la celda; $nh$ el valor superior de la normalización, en nuestro caso 1; $nl$ el valor inferior de la normalización, en nuestro caso 0; $dh$ el valor máximo de la columna en donde se encuentra $x$; y $dl$ el valor minimo de la columna donde se encuentra $x$.
-
-Finalmente dividimos el dataset en 2, dejando un 80\% para el entrenamiento del modelo (red neuronal), y un 20\% con propositos de testeo.
+Finalmente dividimos el dataset en 2, dejando un 80% para el entrenamiento del modelo (red neuronal), y un 20% con propositos de testeo.
 
 ## Metodo de Machine Learning
 Para realizar machine learning como forma de resolucion del problema planteado previamente, se crea una red neuronal a partir de funciones sigmoides que permiten un alto aprendizaje de la red a nivel global.
@@ -28,7 +26,16 @@ La red anteriormente descrita presenta:
 - Output Layer: 1 sigmoide como output.
 
 
+Para realizar machine learning como forma de resolucion del problema planteado previamente, se crea una red neuronal a partir de funciones sigmoides que permiten un alto aprendizaje de la red a nivel global. Se utilizo como base el archivo subido por el Profesor a U-cursos, llamado NeuralNetwork.py.
+
+La red anteriormente descrita presenta:
+- Input Layer:  58 sigmoides como input.
+- Hidden Layer: 58 sigmoides en su capa oculta. 
+- Output Layer: 1 sigmoide como output.
+
 ## Metodo de evaluacion
+ 
+ Para la evaluacion del modelo se utilizo la medida de *Accuracy*, pera calcular el costo se utilizo el *MSE*, o error cuadratico medio, por ultimo se calculo la matriz de confusion del testeo de los datos.
 
 ## Analisis y Resultados
 ### Desarrollo de la Red Neuronal
@@ -47,4 +54,13 @@ La red anteriormente descrita presenta:
 ## Conclusion
 
 
-![alt text](http://url/to/img.png) 
+## Librerias
+
+Las librerias utilizadas son: 
+- Numpy. Libreria para manejo de matrices y operaciones entre estas. Ademas, de poder inicializar matrices aleatoriamente.
+
+-  Pandas. Libreria para carga y pre-procesamiento de dataset.
+
+- Matplotlib. Libreria grafica para mostrar comparaciones entre datos.
+
+La forma de instalar librerias estan en el archivo [InstallLibraries](InstallLibraries.md)
