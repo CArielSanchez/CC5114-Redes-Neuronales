@@ -51,12 +51,8 @@ def calculate_cost(A2, Y,m):
   cost = np.sum((0.5 * (A2 - Y) ** 2).mean(axis=1))/m
   sub_a2=np.squeeze(A2)
   sub_y=sub_a2-Y
-  
-  
-  
   c=0
   for x in sub_y:
-    
     if(abs(x)<0.5):
       c+=1
   accuracy=c/m
@@ -114,24 +110,27 @@ def update_parameters(parameters, grads, learning_rate):
   return new_parameters
 
 # model is the main function to train a model
-# X: is the set of training inputs
-# Y: is the set of training outputs
+# X: is the set (is a matrix)of training inputs
+# Y: is the set (is a list) of training outputs
 # n_x: number of inputs (this value impacts how X is shaped)
 # n_h: number of neurons in the hidden layer
 # n_y: number of neurons in the output layer (this value impacts how Y is shaped)
+# Retunrs the parameters of the model and the error and accuracy of the model through the epochs
 def model(X, Y, n_x, n_h, n_y, num_of_iters, learning_rate):
   
+  #list that save the error,accuracy and epoch
   cost_iteration_data=[]
-  m = X.shape[1] # No. of training examples
-  
-
+  ##Auxiliar list
   cost_list=[]
   accuracy_list=[]
   i_list=[]
 
+  # m: No. of training examples
+  m = X.shape[1] 
+
   parameters = initialize_parameters(n_x, n_h, n_y)
+
   for i in range(0, num_of_iters+1):
-    print(i)
     a2, cache = forward_prop(X, parameters)
     cost,accuracy = calculate_cost(a2, Y,m)
     grads = backward_prop(X, Y, cache, parameters,m)
@@ -155,7 +154,6 @@ def predict(X, parameters):
   
   a2, cache = forward_prop(X, parameters)
   yhat = a2
-
   yhat = np.squeeze(yhat)
 
   if(yhat >= 0.5):
@@ -168,37 +166,3 @@ def predict(X, parameters):
 
 # Set the seed to make result reproducible
 np.random.seed(42)
-
-'''
-# The 4 training examples by columns
-X = np.array([[0, 0, 1, 1],
-              [0, 1, 0, 1]])
-
-# The outputs of the XOR for every example in X
-Y = np.array([[0, 1, 1, 0]])
-
-# No. of training examples
-m = X.shape[1]
-
-# Set the hyperparameters
-n_x = 2     #No. of neurons in first layer
-n_h = 4     #No. of neurons in hidden layer
-n_y = 1     #No. of neurons in output layer
-
-#The number of times the model has to learn the dataset
-number_of_iterations = 10000
-learning_rate = 0.01
-
-# define a model 
-trained_parameters = model(X, Y, n_x, n_h, n_y, number_of_iterations, learning_rate)
-
-# Test 2X1 vector to calculate the XOR of its elements. 
-# You can try any of those: (0, 0), (0, 1), (1, 0), (1, 1)
-X_test = np.array([[0], [1]])
-y_predict = predict(X_test, trained_parameters)
-
-
-# Print the result
-print('Neural Network prediction for example ({:d}, {:d}) is {:d}'.format(
-    X_test[0][0], X_test[1][0], y_predict))
-'''

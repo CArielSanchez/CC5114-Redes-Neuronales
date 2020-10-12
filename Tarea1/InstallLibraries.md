@@ -9,5 +9,5 @@ Para la instalacion de la librerias se hara lo siguiente:
         - WIN: $nombre_env\Scripts\activate
         - MAC: $source nombre_env/bin/activate
 
-    -  Una vez en el enviroment, usar el comando para instalar librerias: 
+    -  Una vez en el enviroment, usar el comando para instalar librerias, estando en la carpeta Tarea1: 
         - $pip install -r requirements.txt
