@@ -12,7 +12,7 @@ Primero que nada usamos la librería pandas para poder cargar el csv y realizar 
 
 Luego procedimos a normalizar los datos con la función:
 
-![Normalization](normalization.png) 
+![Normalization](imgs\normalization.png) 
 
  
 
@@ -21,11 +21,29 @@ Luego procedimos a normalizar los datos con la función:
 Finalmente dividimos el dataset en 2, dejando un 80\% para el entrenamiento del modelo (red neuronal), y un 20\% con propositos de testeo.
 
 ## Metodo de Machine Learning
+Para realizar machine learning como forma de resolucion del problema planteado previamente, se crea una red neuronal a partir de funciones sigmoides que permiten un alto aprendizaje de la red a nivel global.
+La red anteriormente descrita presenta:
+- Input Layer:  58 sigmoides como input.
+- Hidden Layer: 58 sigmoides en su capa oculta. 
+- Output Layer: 1 sigmoide como output.
+
 
 ## Metodo de evaluacion
 
 ## Analisis y Resultados
+### Desarrollo de la Red Neuronal
+![MSE_EPOCH](imgs\Figure_1.png)
+![MSE_ACCURACY](imgs\Figure_2.png) 
+### Matriz de Confusion
+![MATRIX](imgs\Capture.png)
 
+    A partir de esta se desprende lo siguiente:
+    - RECALL:   x/te  
+                *Raining:    0.440
+                *NotRaining: 0.926
+    - PRESITION:    X/TP
+                *Raining:    0.607
+                *NotRaining: 0.863
 ## Conclusion
 
 
