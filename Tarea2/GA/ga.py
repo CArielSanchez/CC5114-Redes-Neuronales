@@ -1,5 +1,6 @@
 import random
 import sys
+import numpy as np
 class GeneticAlgoritm:
     
     def __init__(self,populationSize, mutationRate, fitness, geneFactory,individualFactory,maxIter,selector,terminationCondition):
@@ -64,5 +65,6 @@ class GeneticAlgoritm:
             population=newPopulation
             it+=1
 
+        averFit=np.mean(fitPopulation)
 
-        return population[index],maxFit
+        return population[index],averFit,maxFit

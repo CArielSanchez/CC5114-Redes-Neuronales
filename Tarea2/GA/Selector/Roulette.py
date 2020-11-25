@@ -9,7 +9,7 @@ class Roulette:
         fsum=self.sum_fitness_list(f)
         if fsum<0:
             fsum=0
-        rand= np.random.seed(semilla)
+        rand = np.random.seed(semilla)
         sI=[]
         for i in range(0,n_to_select):
             selected = rand.nexInt(fsum + 1)
