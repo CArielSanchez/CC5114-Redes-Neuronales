@@ -25,10 +25,20 @@ class GeneticAlgoritm:
         return 0
 
     def crossover(self,indA,indB):
-        return 0
+        sizeGenes = len(indA)
+        selectGenes = random.randint(0,sizeGenes-1)
+        crossover = indA[:selectGenes]+ indB[selectGenes:]
+        return crossover
     
     def mutation(self,ind):
-        return 0
+        mutate = ind
+        sizeGenes = len(mutate)
+        #Si el rand esta dentro de la taza de mutacion, mutamos si no no
+        if(random.random()<= self.mutationRate):
+            selectGenes = random.randint(0,sizeGenes-1)
+            mutate[selectGenes] = self.geneFactory
+
+        return mutate
 
     def run(self):
         
