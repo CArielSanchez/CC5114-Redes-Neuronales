@@ -21,8 +21,8 @@ class GeneticAlgoritm:
         return population
 
     def selection(self,population):
-        self.selector()
-        return 0
+        selected= self.selector.run(population,seed=20)
+        return selected
 
     def crossover(self,indA,indB):
         sizeGenes = len(indA)
