@@ -36,7 +36,7 @@ class GeneticAlgoritm:
         #Si el rand esta dentro de la taza de mutacion, mutamos si no no
         if(random.random()<= self.mutationRate):
             selectGenes = random.randint(0,sizeGenes-1)
-            mutate[selectGenes] = self.geneFactory
+            mutate[selectGenes] = self.geneFactory()
 
         return mutate
 

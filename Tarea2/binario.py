@@ -1,5 +1,4 @@
 import random
-import __init__
 from GA.ga import *
 from GA.Selector.Roulette import *
 class binary:
