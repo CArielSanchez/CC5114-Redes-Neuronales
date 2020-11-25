@@ -4,18 +4,13 @@ class Roulette:
     def __init__(self,fitnessF):
         self.fitnessF=fitnessF
         
-    def run(self,individuals,n_to_select,semilla):
+    def run(self,individuals,semilla):
         f= self.fitness_list(individuals)
         fsum=self.sum_fitness_list(f)
-        if fsum<0:
-            fsum=0
-        rand = np.random.seed(semilla)
-        sI=[]
-        for i in range(0,n_to_select):
-            selected = rand.nexInt(fsum + 1)
-            sIndvidual= self.selected_individuals(f,individuals,selected)
-            sI.append(sIndvidual)
-        return sI
+        rand= np.random.seed(semilla)
+        selected = rand.randint(fsum + 1)
+        sIndividual= self.selected_individuals(f,individuals,selected)
+        return sIndividual
        
     def fitness_list(self,individuals):
         fits=[]
@@ -25,8 +20,7 @@ class Roulette:
     def sum_fitness_list(self,f_list):
         s=0
         for i in f_list:
-            if(i>=0):
-                sum+=s
+                s+=f_list
         return s 
     def selected_individuals(self,fits,individuals,selected):
         c=0
