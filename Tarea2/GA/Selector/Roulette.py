@@ -7,7 +7,6 @@ class Roulette:
     def run(self,individuals,semilla):
         f= self.fitness_list(individuals)
         fsum=self.sum_fitness_list(f)
-        rand= np.random.seed(semilla)
         selected = rand.randint(fsum + 1)
         sIndividual= self.selected_individuals(f,individuals,selected)
         return sIndividual
