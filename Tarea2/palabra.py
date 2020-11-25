@@ -2,7 +2,7 @@ import random
 import string
 from GA.ga import *
 from GA.Selector.Roulette import *
-class binary:
+class SecretWord:
     def __init__(self,secretWord,number_genes,pop_size):
         self.secretWord = secretWord
         self.n_genes = number_genes
@@ -28,7 +28,15 @@ class binary:
 
     def runGA(self):
         selector = Roulette(self.fitness_char)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_char,geneFactory=self.gen_factory,individualFactory= self.sequence_char_factory,maxIter=100,selector=selector,terminationCondition = lambda f : f == 1)
-        best_fitness_list,avg_list,best_indv = ga.run()
+        print("Palabra a Encontrar", self.secretWord)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_char,geneFactory=self.gen_factory,individualFactory= self.sequence_char_factory,maxIter=10000,selector=selector,terminationCondition = lambda f : f == 1)
+        fitPop, population,best_indv,avg_fit,max_fit= ga.run()
 
-        print(''.join(best_indv))
+        print("Fit Value: ", max_fit)
+        print("Best Individual", best_indv)
+
+word = "gato"
+popSize = 10
+nGenes = len(word)
+a = SecretWord(word,nGenes,popSize)
+a.runGA()

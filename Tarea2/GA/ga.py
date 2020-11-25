@@ -22,7 +22,7 @@ class GeneticAlgoritm:
         return population
 
     def selection(self,population):
-        selected= self.selector.run(population,seed=20)
+        selected= self.selector.run(population)
         return selected
 
     def crossover(self,indA,indB):
@@ -42,13 +42,16 @@ class GeneticAlgoritm:
         return mutate
 
     def run(self):
-        
+        print("Maximas Iteraciones: ", self.maxIter)
+
         it = 0
         maxFit = -1*sys.maxsize
-        index = 0
         population = self.initializePopulation()
 
-        while(self.terminationCondition(maxFit)==False or it<self.maxIter):
+        while(self.terminationCondition(maxFit)==False and it<self.maxIter):
+
+            maxFit = -1*sys.maxsize
+            index = 0
             popSize = self.populationSize
             newPopulation = []
             fitPopulation = []
@@ -65,6 +68,7 @@ class GeneticAlgoritm:
             population=newPopulation
             it+=1
 
+        print("Iteraciones: ",it)
         averFit=np.mean(fitPopulation)
 
-        return population[index],averFit,maxFit
+        return fitPopulation,population,population[index],averFit,maxFit

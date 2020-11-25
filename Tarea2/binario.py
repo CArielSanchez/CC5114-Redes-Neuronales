@@ -1,19 +1,21 @@
 import random
 from GA.ga import *
 from GA.Selector.Roulette import *
-class binary:
+class Binary:
     def __init__(self,number_to_convert,number_genes,pop_size):
         self.n_convert=number_to_convert
         self.n_genes=number_genes
         self.pop_size=pop_size
+        self.maxNum = 2**(self.n_genes)
+    
 
     def fitness_bits(self, indv):
         result=0
         exp = 1
         for i in indv[::-1]:
-            result += int(i) + exp
+            result += int(i) * exp
             exp *= 2
-        return - abs(self.n_convert - result )
+        return self.maxNum - abs(self.n_convert - result )
         
     def gen_factory(self):
         if(random.random() > 0.5):
@@ -29,7 +31,13 @@ class binary:
 
     def runGA(self):
         selector = Roulette(self.fitness_bits)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_bits,geneFactory=self.gen_factory(),individualFactory= self.sequence_bit_factory,maxIter=100,selector=selector,terminationCondition = lambda f : f == 0)
-        best_fitness_list,avg_list,best_indv = ga.run()
+        print("Numero a Convertir", self.n_convert)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_bits,geneFactory=self.gen_factory,individualFactory= self.sequence_bit_factory,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxNum)
+        fitPop, population,best_indv,avg_fit,max_fit= ga.run()
 
-        print(''.join(best_indv))
+        print("Fit Value: ", max_fit)
+        print("Best Individual", best_indv)
+
+
+a = Binary(4,3,10)
+a.runGA()
