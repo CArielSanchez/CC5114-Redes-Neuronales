@@ -1,7 +1,7 @@
 import random
-from GA.ga import *
+from GA.ga_tsp import *
 from GA.Selector.Roulette import *
-import sys
+import sys,math
 class City:
     def __init__(self,name,latitude=0,longitude=0,maxpos=1000):
         self.name=name
@@ -11,7 +11,8 @@ class City:
         
     def getDistance(self,toCity):
         lat_city,long_city = toCity.getCoordinate()
-        return 0
+        dist = math.sqrt(( self.latitude - lat_city)**2 + (self.longitude - long_city)**2)
+        return dist
     def toRandom(self):
         self.latitude=random.randint(0,self.maxpos)
         self.longitude=random.randint(0,self.maxpos)
@@ -23,15 +24,17 @@ class TravelingSalesman:
         self.citys=citys
         self.n_genes=number_genes
         self.pop_size=pop_size    
-        self.maxNum=sys.maxsize
+        self.maxNum=1000
 
     def fitness_cities(self, indv):
         result=0
         for i in range(0,len(indv)-1):
             result+=indv[i].getDistance(indv[i+1])
-        return self.maxNum - result
+        return (self.maxNum - result)/self.maxNum
         
-    def gen_factory(self,citys):
+    def gen_factory(self,citys= 0):
+        if citys== 0:
+            citys=self.citys
         r = random.randint(0,len(citys)-1)
         return citys[r]
 
@@ -46,13 +49,16 @@ class TravelingSalesman:
 
     def runGA(self):
         selector = Roulette(self.fitness_cities)
-        #print("Numero a Convertir", self.n_convert)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_cities,geneFactory=self.gen_factory,individualFactory= self.sequence_city_factory,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxNum)
+        print("Citys:", self.citys)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_cities,geneFactory=self.gen_factory,individualFactory= self.sequence_city_factory,maxIter=5,selector=selector,terminationCondition = lambda f : f == self.maxNum)
         fitPop, population,best_indv,avg_fit,max_fit= ga.run()
 
         print("Fit Value: ", max_fit)
         print("Best Individual", best_indv)
 
-
-a = Binary(4,3,10)
+citys=[]
+ncitys=5
+for i in range(0,ncitys):
+    citys.append( City('C'+ str(i), 2*i , 2*i ) )
+a = TravelingSalesman(citys,ncitys,10)
 a.runGA()
