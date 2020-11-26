@@ -18,7 +18,8 @@ class City:
         self.longitude=random.randint(0,self.maxpos)
     def getCoordinate(self):
         return self.latitude,self.longitude
-
+    def getName(self):
+        return self.name
 class TravelingSalesman:
     def __init__(self,citys,number_genes,pop_size):
         self.citys=citys
@@ -26,7 +27,7 @@ class TravelingSalesman:
         self.pop_size=pop_size    
         self.maxNum=1000
 
-    def fitness_cities(self, indv):
+    def fitness_city(self, indv):
         result=0
         for i in range(0,len(indv)-1):
             result+=indv[i].getDistance(indv[i+1])
@@ -38,7 +39,7 @@ class TravelingSalesman:
         r = random.randint(0,len(citys)-1)
         return citys[r]
 
-    def sequence_city_factory(self):
+    def sequence_city(self):
         elected_citys=[]
         copy_citys= self.citys.copy()
         for i in range(self.n_genes):
@@ -48,16 +49,17 @@ class TravelingSalesman:
         return elected_citys
 
     def runGA(self):
-        selector = Roulette(self.fitness_cities)
+        selector = Roulette(self.fitness_city)
         print("Citys:", self.citys)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_cities,geneFactory=self.gen_factory,individualFactory= self.sequence_city_factory,maxIter=5,selector=selector,terminationCondition = lambda f : f == self.maxNum)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_city,geneFactory=self.gen_factory,individualFactory= self.sequence_city,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxNum)
         fitPop, population,best_indv,avg_fit,max_fit= ga.run()
 
         print("Fit Value: ", max_fit)
-        print("Best Individual", best_indv)
+        for b_i in best_indv:
+            print("City", b_i.getName(), b_i.getCoordinate())
 
 citys=[]
-ncitys=5
+ncitys=3
 for i in range(0,ncitys):
     citys.append( City('C'+ str(i), 2*i , 2*i ) )
 a = TravelingSalesman(citys,ncitys,10)
