@@ -3,20 +3,26 @@ from GA.ga import *
 from GA.Selector.Roulette import *
 import sys
 class City:
-    def __init__(self,name,latitude,longitude):
+    def __init__(self,name,latitude=0,longitude=0,maxpos=1000):
         self.name=name
         self.latitude=latitude
         self.longitude=longitude
+        self.maxpos=maxpos
     def getDistance(self,toCity):
-        
-    
+        lat_city,long_city = toCity.getCoordinate()
+        return 0
+    def toRandom(self):
+        self.latitude=random.randint(0,self.maxpos)
+        self.longitude=random.randint(0,self.maxpos)
+    def getCoordinate(self):
+        return self.latitude,self.longitude
 class TravelingSalesman:
     def __init__(self,citys,number_genes,pop_size):
         self.citys=citys
         self.n_genes=number_genes
         self.pop_size=pop_size    
         self.maxNum=sys.maxsize
-        
+
     def fitness_bits(self, indv):
         result=0
         for i in range(0,len(indv)-1):
