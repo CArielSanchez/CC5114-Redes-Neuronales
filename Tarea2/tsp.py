@@ -50,8 +50,7 @@ class TravelingSalesman:
 
     def runGA(self):
         selector = Roulette(self.fitness_city)
-        print("Citys:", self.citys)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_city,geneFactory=self.gen_factory,individualFactory= self.sequence_city,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxNum)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_city,geneFactory=self.gen_factory,individualFactory= self.sequence_city,maxIter=10gi00,selector=selector,terminationCondition = lambda f : f == self.maxNum)
         fitPop, population,best_indv,avg_fit,max_fit= ga.run()
 
         print("Fit Value: ", max_fit)
@@ -61,6 +60,8 @@ class TravelingSalesman:
 citys=[]
 ncitys=3
 for i in range(0,ncitys):
-    citys.append( City('C'+ str(i), 2*i , 2*i ) )
+    city = City('C'+ str(i), 2*i , 2*i )
+    citys.append( city )
+
 a = TravelingSalesman(citys,ncitys,10)
 a.runGA()

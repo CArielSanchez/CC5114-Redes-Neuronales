@@ -27,17 +27,40 @@ class GeneticAlgoritm:
 
     def crossover(self,indA,indB):
         sizeGenes = len(indA)
-        selectGenes = random.randint(0,sizeGenes-1)
-        crossover = indA[:selectGenes]+ indB[selectGenes:]
-        return crossover
+
+        selectGenes = random.randint(1,sizeGenes-1)
+        posicion = random.randint(0,sizeGenes-1-selectGenes)
+
+        child=indA[posicion:posicion+selectGenes]
+
+        j=0
+        i=0
+        while i < sizeGenes:
+            if indB[j] in child:
+                j+=1
+                continue
+            if (posicion<=i and i< posicion+selectGenes):
+                i+=1
+                continue
+            indA[i]=indB[j]
+            i+=1
+            j+=1
+        return indA
     
     def mutation(self,ind):
         mutate = ind
         sizeGenes = len(mutate)
+
         #Si el rand esta dentro de la taza de mutacion, mutamos si no no
+        #Se realiza un swap aleatorio entre ciudades
+
         if(random.random()<= self.mutationRate):
             selectGenes = random.randint(0,sizeGenes-1)
-            mutate[selectGenes] = self.geneFactory()
+            swapGen = random.randint(0,sizeGenes-1)
+            swapCity = mutate[selectGenes]
+            mutate[selectGenes] = mutate[swapGen]
+            mutate[swapGen] = swapCity
+
 
         return mutate
 
