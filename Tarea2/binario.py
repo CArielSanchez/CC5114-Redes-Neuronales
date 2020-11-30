@@ -2,13 +2,23 @@ import random
 from GA.ga import *
 from GA.Selector.Roulette import *
 import matplotlib.pyplot as plt
+
+# Class to find the binary form of a int number
+
 class Binary:
+
+    # Contructor of a Binary, receives:
+    # number_to_convert: Its the number that we would like to convert
+    # number_genes: Its the umber of genes used(length of the secret word)
+    # pop_size: Its the population size
+
     def __init__(self,number_to_convert,number_genes,pop_size):
         self.n_convert=number_to_convert
         self.n_genes=number_genes
         self.pop_size=pop_size
         self.maxNum = 2**(self.n_genes)
     
+    # Gets the fitness of an individual (of a set of bits)
 
     def fitness_bits(self, indv):
         result=0
@@ -18,17 +28,23 @@ class Binary:
             exp *= 2
         return self.maxNum - abs(self.n_convert - result )
         
+    # Generate a gen (from [0,1])
+
     def gen_factory(self):
         if(random.random() > 0.5):
             return '1'
         else:
             return '0'
 
+    # Generate an individual
+
     def sequence_bit_factory(self):
         r=[]
         for i in range(self.n_genes):
             r.append(self.gen_factory()) 
         return r
+
+    # Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
 
     def runGA(self):
         selector = Roulette(self.fitness_bits)
@@ -40,14 +56,16 @@ class Binary:
         print("Best Individual", best_indv)
         return max_fit,best_indv,fitnessList
 
-# a = Binary(4,3,10)
-# a.runGA()
+# Generate the binary number (str) of an integer number manually
+
 def binarizar(decimal):
     binario = ''
     while decimal // 2 != 0:
         binario = str(decimal % 2) + binario
         decimal = decimal // 2
     return str(decimal) + binario
+
+# Variation of the max. fitness over the epoch
 
 def FitnessStudy(N,popSize):
     nGenes = len(binarizar(N))
@@ -59,7 +77,9 @@ def FitnessStudy(N,popSize):
     plt.xlabel("N°EPOCH")
     plt.ylabel("FITNESS")
     plt.show()
-#FitnessStudy(1000,10)
+
+# Varation of the n° of the iterations using differents population size
+
 def PopulationStudy(N,popsizeInit,popsizeEnd):
     nGenes = len(binarizar(N))
     IterationList=[]
@@ -74,4 +94,6 @@ def PopulationStudy(N,popsizeInit,popsizeEnd):
     plt.xlabel("Size")
     plt.ylabel("N°EPOCH")
     plt.show()
+
+#FitnessStudy(1000,10)
 #PopulationStudy(1000,10,100)

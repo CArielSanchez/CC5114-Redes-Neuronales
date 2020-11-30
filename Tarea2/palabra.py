@@ -3,14 +3,24 @@ import string
 from GA.ga import *
 from GA.Selector.Roulette import *
 import matplotlib.pyplot as plt
+
+# Class to find a secret word
+
 class SecretWord:
+
+    # Contructor for a SecretWord, receives:
+    # secretWord: Its the secret word that we would like to find
+    # number_genes: Its the umber of genes used(length of the secret word)
+    # pop_size: Its the population size
+
     def __init__(self,secretWord,number_genes,pop_size):
         self.secretWord = secretWord
         self.n_genes = number_genes
         self.pop_size = pop_size
         
+    # Gets the fitness of an individual (of a set of characters)
 
-    def fitness_char(self, indv): #tengo que entregar negativo?
+    def fitness_char(self, indv): 
         charIguales = 0
         for i in range(self.n_genes):
             if(indv[i]== self.secretWord[i]):
@@ -18,15 +28,21 @@ class SecretWord:
 
         charNormalizado = charIguales/self.n_genes
         return charNormalizado
-        
+    
+    # Generate a gen (from the ascii character)
+
     def gen_factory(self):
         return random.choice(string.ascii_lowercase)
+
+    # Generate an individual
 
     def sequence_char_factory(self):
         r=[]
         for i in range(self.n_genes):
             r.append(self.gen_factory()) 
         return r
+
+    # Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
 
     def runGA(self):
         selector = Roulette(self.fitness_char)
@@ -37,11 +53,9 @@ class SecretWord:
         print("Best Individual", best_indv)
         return max_fit,best_indv,fitnessList
     
-# word = "amarillo"
-# popSize = 100
-# nGenes = len(word)
-# a = SecretWord(word,nGenes,popSize)
-# a.runGA()
+
+# Variation of the max. fitness over the epoch
+
 def FitnessStudy(word,popSize):
     nGenes = len(word)
     a = SecretWord(word,nGenes,popSize)
@@ -52,6 +66,8 @@ def FitnessStudy(word,popSize):
     plt.xlabel("N°EPOCH")
     plt.ylabel("FITNESS")
     plt.show()
+
+# Varation of the n° of the iterations using differents population size
 
 def PopulationStudy(word,popsizeInit,popsizeEnd):
     nGenes = len(word)
@@ -67,5 +83,6 @@ def PopulationStudy(word,popsizeInit,popsizeEnd):
     plt.xlabel("Size")
     plt.ylabel("N°EPOCH")
     plt.show()
-word = "amarillo"
-PopulationStudy(word,10,100)
+
+# word = "amarillo"
+# PopulationStudy(word,10,100)

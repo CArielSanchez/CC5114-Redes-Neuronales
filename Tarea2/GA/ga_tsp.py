@@ -1,8 +1,21 @@
 import random
 import sys
 import numpy as np
+
+# Class for Genetic Algoritm 
+
 class GeneticAlgoritm:
     
+    # Constructor for Genetic Algoritm, receives:
+    # populationSize: Its the number of individuals per iteration
+    # mutationRate: Its the rate of the process of mutation
+    # fitness: Its the fitness function
+    # geneFactory: Its a function that creates a gene
+    # individualFactory: Its a function that creates an individual
+    # maxIter: Its the max iteration over the epochs of the Genetic Algoritm
+    # selector: Its an object of the selector used in the Algoritm
+    # terminationCondition: Its the termination condition of the iterations/epochs
+
     def __init__(self,populationSize, mutationRate, fitness, geneFactory,individualFactory,maxIter,selector,terminationCondition):
         self.populationSize = populationSize
         self.mutationRate = mutationRate
@@ -13,17 +26,22 @@ class GeneticAlgoritm:
         self.selector=selector
         self.terminationCondition = terminationCondition
 
+    # Initialize the population, creating each individual for the population Size.
+
     def initializePopulation(self):
         popSize = self.populationSize
         population = []
-        #quizas desde 0-popSize
         for i in range(popSize):
             population.append(self.individualFactory())
         return population
 
+    # Select an individual of a set of individuals(population) using a selector
+
     def selection(self,population):
         selected= self.selector.run(population)
         return selected
+
+    # Using two individuals, generate a new individual with both characteristics
 
     def crossover(self,indA,indB):
         sizeGenes = len(indA)
@@ -47,11 +65,12 @@ class GeneticAlgoritm:
             j+=1
         return indA
     
+    # Mutate a gen of an individual using the mutate rate
+
     def mutation(self,ind):
         mutate = ind
         sizeGenes = len(mutate)
 
-        #Si el rand esta dentro de la taza de mutacion, mutamos si no no
         #Se realiza un swap aleatorio entre ciudades
 
         if(random.random()<= self.mutationRate):
@@ -64,9 +83,9 @@ class GeneticAlgoritm:
 
         return mutate
 
-    def run(self):
-        print("Maximas Iteraciones: ", self.maxIter)
+    # Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
 
+    def run(self):
         it = 0
         maxFit = -1*sys.maxsize
         population = self.initializePopulation()
@@ -91,7 +110,7 @@ class GeneticAlgoritm:
             population=newPopulation
             it+=1
             fitnessList.append(maxFit)
-        print("Iteraciones: ",it)
-        averFit=np.mean(fitPopulation)
+
+        #averFit=np.mean(fitPopulation)
 
         return population[index],maxFit,fitnessList
