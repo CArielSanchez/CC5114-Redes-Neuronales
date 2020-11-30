@@ -1,1 +1,1 @@
-print("init")
+print("__init__")
