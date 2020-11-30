@@ -43,7 +43,7 @@ class GeneticAlgoritm:
 
     def run(self):
         print("Maximas Iteraciones: ", self.maxIter)
-
+        fitnessList=[]
         it = 0
         maxFit = -1*sys.maxsize
         population = self.initializePopulation()
@@ -67,8 +67,8 @@ class GeneticAlgoritm:
 
             population=newPopulation
             it+=1
-
+            fitnessList.append(maxFit)
         print("Iteraciones: ",it)
-        averFit=np.mean(fitPopulation)
+        #averFit=np.mean(fitPopulation)
 
-        return fitPopulation,population,population[index],averFit,maxFit
+        return population[index],maxFit,fitnessList
