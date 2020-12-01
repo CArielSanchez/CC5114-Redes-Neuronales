@@ -20,14 +20,14 @@ El problema consiste en encontrar una palabra oculta usando un algoritmo genéti
 ### Funcionamiento
 
 El algoritmo recibe:
-- Tamaño de la poblacion: Donde la población es un cojunto de individuos.
+- Tamaño de la poblacion: Donde la población es un conjunto de individuos.
 - Tasa de la mutación: Es la probabilidad de mutar un gen de un individuo.
 - Fintess: Es la función que indica que tan cerca esta de la respuesta.
 - GeneFactory: Es la función que genera un gen aleatoriamente.
 - IndividualFactory: Es la función que genera un individuo aleatoriamente.
 - MaxIter: Es la máxima epoca que puede alcanzar el algoritmo.
-- Selector: Es tipo de selector que se usara para elegir a un individuo.
-- TerminationCondition: Es la condición de termino del algoritmo.
+- Selector: Es tipo de selector que se usará para elegir a un individuo.
+- TerminationCondition: Es la condición de término del algoritmo.
 
 Primero el algoritmo inicializa la población, utilizando IndividualFactory para crear los individuos de acuerdo al tamaño de la población.
 Luego, el algoritmo itera hasta que se alcanza MaxIter o TerminationCondition, generando nuevos individuos a través de la herencia y la mutacion, de una generacion a otra. 
@@ -35,11 +35,11 @@ Finalmente cuando terminan las iteraciones, el algoritmo entrega el mejor indivi
 
 ### Selector
 
-Para seleccionar a un individuo dentro de una lista de individuos utilizaremos el algoritmo de la ruleta, donde se escoge a un individuo aleatoriamente, donde su probabilidad de ser escogido es directamente proporcional a su fitness, entonces a mayor fitness mayor probabilidad de ser escogido.
+Para seleccionar a un individuo dentro de una lista de individuos utilizaremos el algoritmo de la ruleta, en el cual se escoge a un individuo aleatoriamente, donde su probabilidad de ser escogido es directamente proporcional a su fitness, entonces a mayor fitness mayor probabilidad de ser escogido.
 
 ### Herencia
 
-Para calcular la herencia entre 2 individuos se elije aleatoriamente una posición para cortar los genes de los 2 individuos, en donde para crear un nuevo individuo, se escoge el primer trozo del primer individuo y el segundo trozo del segundo individuo.
+Para calcular la herencia entre 2 individuos se elije aleatoriamente una posición para cortar los genes de los 2 individuos, en donde para crear un nuevo individuo, se escoge el primer trozo del primer individuo y el segundo trozo del segundo individuo, los cuales luego son unidos.
 
 ### Mutacion
 
@@ -50,7 +50,7 @@ Para realizar la mutacion de un individuo, se genera un gen aleatoriamente y se 
 
 Para instanciar el algoritmo genético para ser utilizado para encontrar la palabra secreta definimos una Clase llamada SecretWord.
 Esta clase recibe una palabra, el número de genes utilizado (que será la cantidad de carácteres de la palabra) y el tamaño de la población.
-Además la clase contiene los metodos para crear un gen, para crear un individuo, para correr el algoritmo genético y para calcular el fitness.
+Además la clase contiene los métodos para crear un gen, para crear un individuo, para correr el algoritmo genético y para calcular el fitness.
 
 ### Función de Fitness
 
@@ -78,22 +78,22 @@ El problema consiste en encontrar la transformacion binaria de un número, utili
 
 ## Algoritmo Genetico Usado
 
-El algoritmo genetico usado, es el mismo que el utilizado en el problema de la palabra secreta, al igual que los métodos de mutacion, herencia y el uso del selector tipo ruleta.
+El algoritmo genético usado, es el mismo que el utilizado en el problema de la palabra secreta, al igual que los métodos de mutación, herencia y el uso del selector tipo ruleta.
 
 
 ## Instancia del Algoritmo 
 
-Para instanciar el algoritmo genético a ser utilizado, creamos una Clase llamada Binary, el cual para instanciar este objeto recibe el número a convertir, la cantidad de genes utilizados y el tamaño de la población a utilizar. Además tenemos métodos para generar un gen, el cuál generara un número aleatorio de 1 o 0; un método para crear un individuo aleatoriamente; un metodo para el cálculo de fitness y un metodo para correr el algoritmo genético, instanciando el selector con una tasa de mutación de 0.1 y con una condicion de termino para cuando se alcance el *Número Máximo*.
+Para instanciar el algoritmo genético a ser utilizado, creamos una Clase llamada Binary, el cual para instanciar este objeto recibe el número a convertir, la cantidad de genes utilizados y el tamaño de la población a utilizar. Además tenemos métodos para generar un gen, el cuál generara un número aleatorio de 1 o 0; un método para crear un individuo aleatoriamente; un método para el cálculo de fitness y un método para correr el algoritmo genético, instanciando el selector con una tasa de mutación de 0.1 y con una condicion de termino para cuando se alcance el *Número Máximo*.
 El número máximo sera definido como 2 elevado al número de genes.
 Cabe destacar que para calcular el número de genes transformamos el número a convertir a binario y se utilizó el largo de este.
 
 ### Función de Fitness
 
-La función fitness definida por nosotros, transforma el individuo, que es un número binario en string, en un número entero. Luego se calcula la diferencia entre el numero a convertir y el individuo y se resta al número máximo.
+La función fitness definida por nosotros, transforma el individuo, que es un número binario en string, en un número entero. Luego se calcula la diferencia entre el número a convertir y el individuo y se resta al número máximo.
 
 ## Experimentos
 
-Para probar nuestro algoritmo genético, realizamos 2 tipos de estudios o experimetos. El primer experimento, estudia el comportamiento del fitness a través de las epocas y el segundo experimento nos puestra la variacion de la época alcanzanda, dependiendo del tamaño de la población utilizado.
+Para probar nuestro algoritmo genético, realizamos 2 tipos de estudios o experimetos. El primer experimento, estudia el comportamiento del fitness a través de las épocas y el segundo experimento nos muestra la variacion de la época alcanzanda, dependiendo del tamaño de la población utilizado.
 
 
 ### Fitness vs Epoch
@@ -121,21 +121,22 @@ El algoritmo recibe:
 - Fintess: Es la función que indica que tan cerca esta de la respuesta.
 - GeneFactory: Es la función que genera un gen aleatoriamente.
 - IndividualFactory: Es la función que genera un individuo aleatoriamente.
-- MaxIter: Es la máxima epoca que puede alcanzar el algoritmo.
+- MaxIter: Es la máxima época que puede alcanzar el algoritmo.
 - Selector: Es tipo de selector que se usara para elegir a un individuo.
 - TerminationCondition: Es la condición de termino del algoritmo.
 
 Primero el algoritmo inicializa la población, utilizando IndividualFactory para crear los individuos de acuerdo al tamaño de la población.
-Luego, el algoritmo itera hasta que se alcanza MaxIter o TerminationCondition, generando nuevos individuos a través de la herencia y la mutacion, de una generacion a otra. 
+Luego, el algoritmo itera hasta que se alcanza MaxIter o TerminationCondition, generando nuevos individuos a través de la herencia y la mutación, de una generacion a otra. 
 Finalmente cuando terminan las iteraciones, el algoritmo entrega el mejor individuo de esa generación en base a su fitness.
 
 ### Selector
 
-El selecector utilizado es el de la ruleta, el mismo utilizado para los 2 problemas anteriores.
+El selector utilizado es el de la ruleta, el mismo utilizado para los 2 problemas anteriores.
 
 ### Herencia
 
-Para calcular la herencia entre 2 individuos, hay que tener en cuenta que las ciudades no pueden repetirse dentro de un individuo, por lo que hay que modificar el algoritmo de herencia mencionado en los 2 problemas anteriores. Entonces para realizar la herencia, seleccionamos la cantidad de genes que deseamos mantener en el primer individuo y luego la posición en la que se encuentran los genes a mantener, por defecto los genes seleccionados se encuentran el uno al lado del otro. Luego de que tenemos este set de genes del individuo 1 selecionado, utilizando el individuo 2 rellenamos los genes vacios en orden sin repetir aquellos que ya se encuentran en el individuo 1. Para un mayor entendimiento véase la imagen.
+Para calcular la herencia entre 2 individuos, hay que tener en cuenta que las ciudades no pueden repetirse dentro de un individuo, por lo que hay que modificar el algoritmo de herencia mencionado en los 2 problemas anteriores. 
+Entonces para realizar la herencia, seleccionamos la cantidad de genes que deseamos mantener en el primer individuo y luego la posición en la que se encuentran los genes a mantener, por defecto los genes seleccionados se encuentran el uno al lado del otro. Luego de que tenemos este set de genes del individuo 1 selecionado, utilizando el individuo 2 rellenamos los genes vacios en orden sin repetir aquellos que ya se encuentran en el individuo 1. Para un mayor entendimiento véase la imagen.
 
 ![Herencia](img/herencia.jpeg) 
 
@@ -151,12 +152,12 @@ Para poder resolver el problema se crearon 2 clases, la clase City, que crea una
 
 ### Clase City
 
-La clase City es utilizada para crear una ciudad, esta  clase recibe el nombre, la latitud, la longitud y la máxima posicion de una coordenada que puede tener una ciudad generada aleatoriamente, es decir sin especificar latitud ni longitud. Esta clase tiene metodos para poder calcular la distancia entre 2 ciudades; la distancia entre una ciudad y la coordenada (0,0); un metodo para crear aleatoriamente ambas coordenadas de una ciudad; y dos metodos para obtener las coordenadas y el nombred de la ciudad.
+La clase City es utilizada para crear una ciudad, esta  clase recibe el nombre, la latitud, la longitud y la máxima posicion de una coordenada que puede tener una ciudad generada aleatoriamente, es decir, sin especificar latitud ni longitud. Esta clase tiene metodos para poder calcular la distancia entre 2 ciudades; la distancia entre una ciudad y la coordenada (0,0); un metodo para crear aleatoriamente ambas coordenadas de una ciudad; y dos metodos para obtener las coordenadas y el nombred de la ciudad.
 
 ### Clase TravelingSalesman
 
 
-Para instanciar el algoritmo genético a ser utilizado, creamos una Clase llamada TravelingSalesman, el cual para instanciar este objeto recibe una lista de ciudades, la cantidad de genes utilizados(es decir la cantidad de ciudades) y el tamaño de la población a utilizar. Además tenemos métodos para generar un gen, el cuál generara una ciudad aleatorie dentro de la lista de ciudades; un método para crear un individuo aleatoriamente, es decir una combinacion de ciudades; un metodo para el cálculo de fitness y un metodo para correr el algoritmo genético, instanciando el selector con una tasa de mutación de 0.1 y con una condicion de termino para cuando se un fitness mayor a 0.98.
+Para instanciar el algoritmo genético a ser utilizado, creamos una Clase llamada TravelingSalesman, el cual para instanciar este objeto recibe una lista de ciudades, la cantidad de genes utilizados(es decir la cantidad de ciudades) y el tamaño de la población a utilizar. Además tenemos métodos para generar un gen, el cuál generara una ciudad aleatoria dentro de la lista de ciudades; un método para crear un individuo aleatoriamente, es decir, una combinacion de ciudades; un método para el cálculo de fitness y un método para correr el algoritmo genético, instanciando el selector con una tasa de mutación de 0.1 y con una condición de término para cuando se un fitness mayor a 0.98.
 El Número Máximo sera definido como la máxima distancia entre una ciudad y la coordenada (0,0), multiplicado por el número de genes amplificado 10.
 
 ### Función de Fitness
