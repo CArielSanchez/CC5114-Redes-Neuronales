@@ -150,5 +150,5 @@ def PopulationStudy(ncitys,popsizeInit,popsizeEnd):
     plt.show()
 
 #FitnessStudy(5,10)
-#PopulationStudy(5,5,50)
+PopulationStudy(5,5,50)
 

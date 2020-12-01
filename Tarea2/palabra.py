@@ -47,7 +47,7 @@ class SecretWord:
     def runGA(self):
         selector = Roulette(self.fitness_char)
         print("Palabra a Encontrar", self.secretWord)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_char,geneFactory=self.gen_factory,individualFactory= self.sequence_char_factory,maxIter=10000,selector=selector,terminationCondition = lambda f : f == 1)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_char,geneFactory=self.gen_factory,individualFactory= self.sequence_char_factory,maxIter=1000,selector=selector,terminationCondition = lambda f : f == 1)
         best_indv,max_fit,fitnessList= ga.run()
         print("Fit Value: ", max_fit)
         print("Best Individual", best_indv)
@@ -84,5 +84,6 @@ def PopulationStudy(word,popsizeInit,popsizeEnd):
     plt.ylabel("N°EPOCH")
     plt.show()
 
-# word = "amarillo"
-# PopulationStudy(word,10,100)
+word = "amarillo"
+#FitnessStudy(word,100)
+#PopulationStudy(word,10,100)

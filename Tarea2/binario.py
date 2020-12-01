@@ -95,5 +95,5 @@ def PopulationStudy(N,popsizeInit,popsizeEnd):
     plt.ylabel("N°EPOCH")
     plt.show()
 
-#FitnessStudy(1000,10)
+#FitnessStudy(1000,25)
 #PopulationStudy(1000,10,100)
