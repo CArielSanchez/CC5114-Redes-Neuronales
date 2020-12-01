@@ -62,9 +62,12 @@ Para probar nuestro algoritmo genético, realizamos 2 tipos de estudios o experi
 
 ### Fitness vs Epoch
 
+![Fitness vs Epoch](img/palabra_1.png) 
+
 ### Epoch vs Popsize
 
-## Conclusión
+![Epoch vs Popsize](img/palabra_2.png) 
+
 
 
 # Binario
@@ -95,10 +98,12 @@ Para probar nuestro algoritmo genético, realizamos 2 tipos de estudios o experi
 
 ### Fitness vs Epoch
 
+![Fitness vs Epoch](img/binari_1.png) 
+
+
 ### Epoch vs Popsize
 
-## Conclusión
-
+![Epoch vs Popsize](img/binari_2.png) 
 
 
 # Traveling Salesman Problem (TSP)
@@ -146,22 +151,37 @@ Para poder resolver el problema se crearon 2 clases, la clase City, que crea una
 
 ### Clase City
 
-
+La clase City es utilizada para crear una ciudad, esta  clase recibe el nombre, la latitud, la longitud y la máxima posicion de una coordenada que puede tener una ciudad generada aleatoriamente, es decir sin especificar latitud ni longitud. Esta clase tiene metodos para poder calcular la distancia entre 2 ciudades; la distancia entre una ciudad y la coordenada (0,0); un metodo para crear aleatoriamente ambas coordenadas de una ciudad; y dos metodos para obtener las coordenadas y el nombred de la ciudad.
 
 ### Clase TravelingSalesman
 
+
+Para instanciar el algoritmo genético a ser utilizado, creamos una Clase llamada TravelingSalesman, el cual para instanciar este objeto recibe una lista de ciudades, la cantidad de genes utilizados(es decir la cantidad de ciudades) y el tamaño de la población a utilizar. Además tenemos métodos para generar un gen, el cuál generara una ciudad aleatorie dentro de la lista de ciudades; un método para crear un individuo aleatoriamente, es decir una combinacion de ciudades; un metodo para el cálculo de fitness y un metodo para correr el algoritmo genético, instanciando el selector con una tasa de mutación de 0.1 y con una condicion de termino para cuando se un fitness mayor a 0.98.
+El Número Máximo sera definido como la máxima distancia entre una ciudad y la coordenada (0,0), multiplicado por el número de genes amplificado 10.
+
+### Función de Fitness
+
+Para el cálculo de la función fitness, sumamos las distancias entre todas las ciudades, las restamos al Número Máximo y lo dividimos por el Número Máximo, para tener una especie de normalizacíon.
+
 ## Experimentos
+
+Para probar nuestro algoritmo genético, realizamos 2 tipos de estudios o experimetos. El primer experimento, estudia el comportamiento del fitness a través de las epocas y el segundo experimento nos puestra la variacion de la época alcanzanda, dependiendo del tamaño de la población utilizado.
 
 ### Fitness vs Epoch
 
+![Fitness vs Epoch](img/city_1.png) 
+
+
 ### Epoch vs Popsize
 
-## Conclusión
+![Epoch vs Popsize](img/city_2.png) 
 
 
+# Conclusión
 
+Como se puede observar en los gráficos de *Fitness vs Epoch* de los 3 experimentos el fitness calculado tiende a aumentar a lo largo de las epocas, sin embargo existen variaciones locales que no presentan este comportamiento. Esto puede deberse a que la mutación y herencia alteran a todos los individuos de la poblacion, ya sea mejorando o empeorando su fitness. Este impacto podría ser minimizado, heredando en cada una de las iteraciones al individuo con máximo fitness en aquella iteración.
 
-![Normalization](imgs/normalization.png) 
+Como se aprecia en los graficos de *Epoch vs Popsize* mientras mayor sea la poblacion, el número de iteraciones realizadas disminuirá, convergiendo a un tamaño de población óptimo. Aquí también se pueden notar variaciones locales mencionades anteriormente.
 
 
 
