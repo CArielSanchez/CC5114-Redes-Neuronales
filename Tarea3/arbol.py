@@ -11,8 +11,10 @@ class Nodo:
     def soyHoja(self):
         return False
 
-    def setNodos(self,nodoIzquierdo,nodoDerecho):
+    def setNodoIzquierdo(self,nodoIzquierdo):
         self.nodoIzquierdo = nodoIzquierdo
+
+    def setNodoDerecho(self,nodoDerecho):
         self.nodoDerecho = nodoDerecho
     
     def getNodoIzq(self):
@@ -23,6 +25,15 @@ class Nodo:
 
     def getValor(self):
         return self.valor
+    
+    def numberHojas(self):
+        if self.soyHoja():
+            return 1
+        else:
+            c = self.getNodoDer().numberHojas()
+            c += self.getNodoIzq().numberHojas()
+            return c
+
 
 
 class Hoja(Nodo):
@@ -59,6 +70,19 @@ class Arbol:
 
     def setValueRaiz(self):
         pass
+    
+    def replaceNodo(self,raiz, nodoIni,nodoFin):
+        if raiz.soyHoja():
+            return False
+        elif raiz == nodoIni:
+            return True
+        else:
+            if self.replaceNodo(raiz.getNodoIzq(),nodoIni,nodoFin):
+                raiz.setNodoIzquierdo(nodoFin)
+            elif self.replaceNodo(raiz.getNodoDer(),nodoIni,nodoFin):
+                raiz.setNodoDerecho(nodoFin)
+
+
 
     def evaluate(self,nodo):
 
@@ -91,7 +115,7 @@ class Arbol:
             operacion = nodo.getValor() 
             nodoIzq = self.imprimir(nodo.getNodoIzq())
             nodoDer = self.imprimir(nodo.getNodoDer())
-            return nodoIzq+operacion+nodoDer
+            return '('+nodoIzq+operacion+nodoDer+')'
 
 
 hoja1 = Hoja(1)
@@ -99,8 +123,11 @@ hoja2 = Hoja(2)
 hoja3 = Hoja(3)
 hoja4 = Hoja(4)
 
+
 nodo1 = Nodo('+',hoja1,hoja2)
 nodo2 = Nodo('*',hoja3,hoja4)
+nodo3 = Nodo('/',hoja1,hoja4)
+
 raiz = Nodo("-",nodo1,nodo2)
 
 arbol = Arbol(raiz)
@@ -109,6 +136,12 @@ arbol2 = arbol.copy()
 hoja2.setValor(5)
 arbol.getRaiz().setValor('+')
 
-print(arbol.evaluate(arbol.getRaiz()))
+# print(arbol.evaluate(arbol.getRaiz()))
+# print(arbol.imprimir(arbol.getRaiz()))
+# print(arbol2.imprimir(arbol2.getRaiz()))
+
+arbol.replaceNodo(arbol.getRaiz(),nodo2,nodo3)
+
 print(arbol.imprimir(arbol.getRaiz()))
-print(arbol2.imprimir(arbol2.getRaiz()))
+print(nodo1.numberHojas())
+print(arbol.getRaiz().numberHojas())
