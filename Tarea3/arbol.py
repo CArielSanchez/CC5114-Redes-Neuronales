@@ -1,3 +1,5 @@
+import random
+
 class Nodo:
     def __init__(self,valor,nodoIzquierdo,nodoDerecho):
 
@@ -33,8 +35,7 @@ class Nodo:
             c = self.getNodoDer().numberHojas()
             c += self.getNodoIzq().numberHojas()
             return c
-
-
+    
 
 class Hoja(Nodo):
     def __init__(self,valor):
@@ -61,6 +62,17 @@ class Arbol:
             nuevoNodo = Nodo(operacion,nodoIzq,nodoDer)
             return nuevoNodo
     
+    def setRandomNodo(self, nodo_actual,nodo_final):
+        if nodo_actual.soyHoja():
+            return True
+        else:
+            if(random.random() > 0.5):
+                if self.setRandomNodo(nodo_actual.getNodoIzq(),nodo_final): #Se fue a la izq
+                    nodo_actual.setNodoIzquierdo(nodo_final)
+            else:
+                if self.setRandomNodo(nodo_actual.getNodoDer(),nodo_final):
+                    nodo_actual.setNodoDerecho(nodo_final)
+
     def copy(self):
         copia = Arbol(self.copyNodo(self.raiz))
         return copia
@@ -81,6 +93,24 @@ class Arbol:
                 raiz.setNodoIzquierdo(nodoFin)
             elif self.replaceNodo(raiz.getNodoDer(),nodoIni,nodoFin):
                 raiz.setNodoDerecho(nodoFin)
+
+    def findNodo_nHojas(self,nodo,numero_hojas): ##Cuidado que puede que la cantidad de hojas que se busca no sea exacta en el arbol.
+        print(numero_hojas)
+        print(nodo.numberHojas())
+        if nodo.soyHoja():
+            pass    
+        elif numero_hojas == nodo.numberHojas():
+            return nodo
+        else:
+            nodoIzq = nodo.getNodoIzq()
+            nodoDer = nodo.getNodoDer()
+            if(random.random() > 0.5):
+                self.findNodo_nHojas(nodoIzq, numero_hojas)
+                self.findNodo_nHojas(nodoDer, numero_hojas)
+            else:
+                self.findNodo_nHojas(nodoDer, numero_hojas)
+                self.findNodo_nHojas(nodoIzq, numero_hojas)
+            
 
 
 
@@ -143,5 +173,13 @@ arbol.getRaiz().setValor('+')
 arbol.replaceNodo(arbol.getRaiz(),nodo2,nodo3)
 
 print(arbol.imprimir(arbol.getRaiz()))
-print(nodo1.numberHojas())
-print(arbol.getRaiz().numberHojas())
+
+nodo4 = Nodo('-',hoja1,Hoja(2))
+
+arbol.setRandomNodo(arbol.getRaiz(),nodo4)
+
+print(arbol.imprimir(arbol.getRaiz()))
+
+print(arbol.imprimir(arbol.findNodo_nHojas(arbol.getRaiz(),5)))
+#print(nodo1.numberHojas())
+#print(arbol.getRaiz().numberHojas())
