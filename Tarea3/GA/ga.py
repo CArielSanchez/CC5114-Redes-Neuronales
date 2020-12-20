@@ -1,3 +1,4 @@
+import __init__
 import random
 import sys
 import numpy as np
@@ -46,19 +47,50 @@ class GeneticAlgoritm:
     # Using two individuals, generate a new individual with both characteristics #Falta esta funcion
 
     def crossover(self,indA,indB):
-
-        numeroTotalHojas = indA.getRaiz().numberHojas.()
-        selectGenes = random.randint(0,sizeGenes-1)
-        crossover = indA[:selectGenes]+ indB[selectGenes:]
-        return crossover
-    
+        n_hojas=indA.getRaiz().numberHojas()
+        n= random.randint(1,n_hojas-1)
+        while(True):
+            indv=self.crossover_aux(n,indA,indB)
+            
+            if(indv!=False):
+                break
+            if(n==1):
+                if(self.fitness(indA)>self.fitness(indB)):
+                    #print(indA.imprimir(indA.getRaiz()))
+                    return indA.copy()
+                else:
+                    #print(indB.imprimir(indA.getRaiz()))
+                    return indB.copy()
+            n= random.randint(1,n_hojas-1)
+        return indv
+       
+    def crossover_aux(self,n_hojas,indA,indB):
+        print(n_hojas)
+        arbolA=indA.copy()
+        arbolB=indB.copy()
+        # print("arbol A "+ arbolA.imprimir(arbolA.getRaiz()))
+        # print("arbol B "+ arbolB.imprimir(arbolB.getRaiz()))
+        n_a=arbolA.findNodo_nHojas(arbolA.getRaiz(),n_hojas)
+        n_b=arbolB.findNodo_nHojas(arbolB.getRaiz(),n_hojas)
+        # print(n_a)   
+        # print(n_b)
+        if(n_a!=None and n_b!=None):
+            #print("arbol inicial "+arbolA.imprimir(arbolA.getRaiz()))
+            arbolA.replaceNodo(arbolA.getRaiz(),n_a,n_b)
+            # print("arbol final "+arbolA.imprimir(arbolA.getRaiz()))
+            return arbolA
+        return False
     # Mutate a gen of an individual using the mutate rate
 
     def mutation(self,ind):
         mutate = ind
+        print("arbol inicial "+mutate.imprimir(mutate.getRaiz()))
         if(random.random()<= self.mutationRate):
+
             nodo = self.geneFactory()
+            print(ind.imprimir(nodo))
             mutate.setRandomNodo(mutate.getRaiz(),nodo)
+        print("arbol final"+mutate.imprimir(mutate.getRaiz()))
         return mutate
 
     # Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
@@ -90,5 +122,5 @@ class GeneticAlgoritm:
             it+=1
             fitnessList.append(maxFit)
         #averFit=np.mean(fitPopulation)
-
+            print(it)
         return population[index],maxFit,fitnessList

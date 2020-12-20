@@ -18,16 +18,16 @@ class Deschiffres:
 
         self.target=target_number
         self.set_numbers = set_of_numbers
-        self.set_operations= ['+','-', '*','/']
+        self.set_operations= ['+','-', '*']
         self.n_genes=number_genes ## EL largo del set de numeros?
         self.pop_size=pop_size
-        self.maxInt = 2147483647
+        self.maxInt = 21474836
         
     
     
     # Gets the fitness of an individual (of a set of bits)
 
-    def fitness_bits(self, indv):
+    def fitness_tree(self, indv):
         value = indv.evaluate(indv.getRaiz())
 
         return self.maxInt - abs(self.target -  value)
@@ -53,27 +53,25 @@ class Deschiffres:
         n_hojas = 2
         while n_hojas<len(self.set_numbers):
             nodo = self.gen_factory()
-            arbol.setRandomNodo(arbol.getRaiz(), nodo)
+            arbol.addRandomNodo(arbol.getRaiz(), nodo)
             n_hojas +=1
 
         return arbol
 
-    # Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
+    #Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
 
-    # def runGA(self):
-    #     selector = Roulette(self.fitness_bits)
-    #     print("Numero a Convertir", self.n_convert)
-    #     ga = GeneticAlgoritm(self.pop_size,mutationRate=0.1,fitness=self.fitness_bits,geneFactory=self.gen_factory,individualFactory= self.sequence_bit_factory,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxNum)
+    def runGA(self):
+        selector = Roulette(self.fitness_tree)
+        print("Numero a Obetener", self.target)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.2,fitness=self.fitness_tree,geneFactory=self.gen_factory,individualFactory= self.sequence_bit_factory,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxInt)
+        best_indv,max_fit,fitnessList= ga.run()
+        print("Fit Value: ", max_fit)
+        print("Best Individual", best_indv.imprimir(best_indv.getRaiz()))
+        return max_fit,best_indv,fitnessList
 
-    #     best_indv,max_fit,fitnessList= ga.run()
-    #     print("Fit Value: ", max_fit)
-    #     print("Best Individual", best_indv)
-    #     return max_fit,best_indv,fitnessList
-
-des = Deschiffres(1235,[1,2,3,4],4,10)
-arbol = des.sequence_bit_factory()
-print(arbol.imprimir(arbol.getRaiz()))
-
+des = Deschiffres(10,[1,2,3,4],4,10)
+# arbol = des.sequence_bit_factory()
+# print(arbol.imprimir(arbol.getRaiz()))
+des.runGA()
 
 #FitnessStudy(1000,25)
-#PopulationStudy(1000,10,100)
