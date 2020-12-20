@@ -91,6 +91,18 @@ class Arbol:
                 else:
                     if self.setRandomNodo(nodo_actual.getNodoDer(),nodo_final):
                         nodo_actual.setNodoDerecho(nodo_final)
+                        
+    # def changeRandomValue(self, nodo_actual,nodo_final):
+    #     if nodo_actual.soyHoja() :
+    #         return True
+        
+    #     else:
+    #         if(random.random() > 0.5):
+    #             if self.addRandomNodo(nodo_actual.getNodoIzq(),nodo_final): #Se fue a la izq
+    #                 nodo_actual.setNodoIzquierdo(nodo_final)
+    #         else:
+    #             if self.addRandomNodo(nodo_actual.getNodoDer(),nodo_final):
+    #                 nodo_actual.setNodoDerecho(nodo_final)
 
     def copy(self):
         copia = Arbol(self.copyNodo(self.raiz))

@@ -18,7 +18,7 @@ class Deschiffres:
 
         self.target=target_number
         self.set_numbers = set_of_numbers
-        self.set_operations= ['+','-', '*']
+        self.set_operations= ['+','-', '*','/']
         self.n_genes=number_genes ## EL largo del set de numeros?
         self.pop_size=pop_size
         self.maxInt = 21474836
@@ -27,10 +27,14 @@ class Deschiffres:
     
     # Gets the fitness of an individual (of a set of bits)
 
-    def fitness_tree(self, indv):
-        value = indv.evaluate(indv.getRaiz())
-
-        return self.maxInt - abs(self.target -  value)
+    def fitness_tree(self, indv): ## Si evaluate tiene division por 0, podriamos tirarlo a infinito
+        try:
+            value = indv.evaluate(indv.getRaiz())
+            fitness = self.maxInt - abs(self.target -  value)
+        except ZeroDivisionError:
+            fitness = 0
+        finally:
+            return fitness
         
     # Generate a gen (from [0,1])
 
@@ -63,15 +67,15 @@ class Deschiffres:
     def runGA(self):
         selector = Roulette(self.fitness_tree)
         print("Numero a Obetener", self.target)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.2,fitness=self.fitness_tree,geneFactory=self.gen_factory,individualFactory= self.sequence_bit_factory,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxInt)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.2,fitness=self.fitness_tree,geneFactory=self.gen_factory,individualFactory= self.sequence_bit_factory,maxIter=10000,selector=selector,terminationCondition = lambda f : f == self.maxInt, setsNumber  = self.set_numbers)
         best_indv,max_fit,fitnessList= ga.run()
         print("Fit Value: ", max_fit)
         print("Best Individual", best_indv.imprimir(best_indv.getRaiz()))
         return max_fit,best_indv,fitnessList
 
-des = Deschiffres(10,[1,2,3,4],4,10)
+des = Deschiffres(30,[1,2,3,4],4,20)
 # arbol = des.sequence_bit_factory()
 # print(arbol.imprimir(arbol.getRaiz()))
 des.runGA()
-
+#print(des.fitness_tree(arbol))
 #FitnessStudy(1000,25)

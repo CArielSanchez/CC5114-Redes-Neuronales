@@ -1,8 +1,8 @@
-import __init__
+#import __init__
 import random
 import sys
 import numpy as np
-import Tarea3.arbol
+#import arbol
 
 # Class for Genetic Algoritm 
 
@@ -18,7 +18,7 @@ class GeneticAlgoritm:
     # selector: Its an object of the selector used in the Algoritm
     # terminationCondition: Its the termination condition of the iterations/epochs
 
-    def __init__(self,populationSize, mutationRate, fitness, geneFactory,individualFactory,maxIter,selector,terminationCondition):
+    def __init__(self,populationSize, mutationRate, fitness, geneFactory,individualFactory,maxIter,selector,terminationCondition,setsNumber):
         self.populationSize = populationSize
         self.mutationRate = mutationRate
         self.fitness = fitness
@@ -27,6 +27,7 @@ class GeneticAlgoritm:
         self.maxIter= maxIter
         self.selector=selector
         self.terminationCondition = terminationCondition
+        self.setsNumber = setsNumber
 
     # Initialize the population, creating each individual for the population Size.
 
@@ -82,17 +83,23 @@ class GeneticAlgoritm:
         return False
     # Mutate a gen of an individual using the mutate rate
 
-    def mutation(self,ind):
+    def mutation(self,ind): #Podriamos intentar mutar solo una hoja tmbn, o en realidad Cambiar solo un valor del nodo/hoja
         mutate = ind
         print("arbol inicial "+mutate.imprimir(mutate.getRaiz()))
         if(random.random()<= self.mutationRate):
-
             nodo = self.geneFactory()
-            print(ind.imprimir(nodo))
             mutate.setRandomNodo(mutate.getRaiz(),nodo)
         print("arbol final"+mutate.imprimir(mutate.getRaiz()))
         return mutate
 
+    # def mutation_2(self,ind):
+    #     mutate = ind
+    #     if(random.random()<= self.mutationRate):
+    #         nodo = self.geneFactory()
+    #         mutate.setRandomNodo(mutate.getRaiz(),nodo)
+    #     print("arbol final"+mutate.imprimir(mutate.getRaiz()))
+    #     return mutate
+    
     # Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
 
     def run(self):
