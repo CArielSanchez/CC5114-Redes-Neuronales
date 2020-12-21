@@ -91,7 +91,18 @@ class Arbol:
                 else:
                     if self.setRandomNodo(nodo_actual.getNodoDer(),nodo_final):
                         nodo_actual.setNodoDerecho(nodo_final)
-                        
+    def setRandomHoja(self,nodo_actual,value):
+        if(nodo_actual.soyHoja()):
+            nodo_actual.setValor(value)
+        else:
+            if(random.random() > 0.5):
+                self.setRandomHoja(nodo_actual.getNodoIzq(),value): #Se fue a la izq
+                    
+            else:
+                self.setRandomHoja(nodo_actual.getNodoDer(),value):
+                    
+
+    
     # def changeRandomValue(self, nodo_actual,nodo_final):
     #     if nodo_actual.soyHoja() :
     #         return True
