@@ -18,7 +18,7 @@ class GeneticAlgoritm:
     # selector: Its an object of the selector used in the Algoritm
     # terminationCondition: Its the termination condition of the iterations/epochs
 
-    def __init__(self,populationSize, mutationRate, fitness, geneFactory,individualFactory,maxIter,selector,terminationCondition,setsNumber,setsOperations):
+    def __init__(self,populationSize, mutationRate, fitness, geneFactory,individualFactory,maxIter,selector,terminationCondition,setsPoints,setsOperations, maxNum):
         self.populationSize = populationSize
         self.mutationRate = mutationRate
         self.fitness = fitness
@@ -27,8 +27,9 @@ class GeneticAlgoritm:
         self.maxIter= maxIter
         self.selector=selector
         self.terminationCondition = terminationCondition
-        self.setsNumber = setsNumber
+        self.setsPoints = setsPoints
         self.setsOperations = setsOperations
+        self.maxNum = maxNum
 
     # Initialize the population, creating each individual for the population Size.
 
@@ -49,31 +50,34 @@ class GeneticAlgoritm:
     # Using two individuals, generate a new individual with both characteristics #Falta esta funcion
 
     def crossover(self,indA,indB):
-        n_hojas=indA.getRaiz().numberHojas()
-        n= random.randint(1,n_hojas-1)
+        n_hojas_a=indA.getRaiz().numberHojas()
+        n_hojas_b=indB.getRaiz().numberHojas()
+
+        n1 = random.randint(1,n_hojas_a-1)
+        n2 = random.randint(1,n_hojas_b-1)
         while(True):
-            indv=self.crossover_aux(n,indA,indB)
-            
+            indv=self.crossover_aux(n1,n2,indA,indB)
             if(indv!=False):
                 break
-            if(n==1):
+            if(n1==1):
                 if(self.fitness(indA)>self.fitness(indB)):
                     #print(indA.imprimir(indA.getRaiz()))
                     return indA.copy()
                 else:
                     #print(indB.imprimir(indA.getRaiz()))
                     return indB.copy()
-            n= random.randint(1,n_hojas-1)
+            n1 = random.randint(1,n_hojas_a-1)
+            n2 = random.randint(1,n_hojas_b-1)
         return indv
        
-    def crossover_aux(self,n_hojas,indA,indB):
+    def crossover_aux(self,n_hojas_a,n_hojas_b,indA,indB):
         #print(n_hojas)
         arbolA=indA.copy()
         arbolB=indB.copy()
         # print("arbol A "+ arbolA.imprimir(arbolA.getRaiz()))
         # print("arbol B "+ arbolB.imprimir(arbolB.getRaiz()))
-        n_a=arbolA.findNodo_nHojas(arbolA.getRaiz(),n_hojas)
-        n_b=arbolB.findNodo_nHojas(arbolB.getRaiz(),n_hojas)
+        n_a=arbolA.findNodo_nHojas(arbolA.getRaiz(),n_hojas_a)
+        n_b=arbolB.findNodo_nHojas(arbolB.getRaiz(),n_hojas_b)
         # print(n_a)   
         # print(n_b)
         if(n_a!=None and n_b!=None):
@@ -93,7 +97,9 @@ class GeneticAlgoritm:
                 nodo = self.geneFactory()
                 mutate.setRandomNodo(mutate.getRaiz(),nodo)
             elif(rand < 0.66):
-                mutate.setRandomHoja(mutate.getRaiz(),random.choice(self.setsNumber))
+                lists = list(range(self.maxNum))
+                lists.append('x')
+                mutate.setRandomHoja(mutate.getRaiz(),random.choice(lists))
             else:
                 mutate.setRandomOperation(mutate.getRaiz(),mutate.getRaiz().numberHojas()-1,self.setsOperations)
         # print("arbol final"+mutate.imprimir(mutate.getRaiz()))
