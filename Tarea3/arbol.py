@@ -103,7 +103,6 @@ class Arbol:
                     
     def setRandomOperation(self,nodo_actual,n_nodos,set_operations):
         if(nodo_actual.soyHoja()):
-            print("aca")
             pass
         else:
             rand = random.randint(1,n_nodos)
@@ -137,8 +136,6 @@ class Arbol:
     def getRaiz(self):
         return self.raiz
 
-    def setValueRaiz(self):
-        pass
     
     def replaceNodo(self,raiz, nodoIni,nodoFin):
         if raiz.soyHoja():
@@ -191,7 +188,7 @@ class Arbol:
             elif operacion == '/':
 
                 return nodoIzq/nodoDer
-
+    
     def evaluatePoint(self,nodo,x):
         if nodo.soyHoja():
             #print(nodo.getValor())

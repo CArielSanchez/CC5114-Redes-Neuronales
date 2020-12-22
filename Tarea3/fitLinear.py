@@ -1,4 +1,3 @@
-import random
 from GA.gaLinear import *
 from GA.Selector.Roulette import *
 from arbol import *
@@ -14,10 +13,9 @@ class FitLinear:
     # number_genes: Its the umber of genes used(length of the secret word)
     # pop_size: Its the population size
 
-    def __init__(self,set_of_points,number_genes,pop_size):
+    def __init__(self,set_of_points,pop_size):
         self.set_points = set_of_points
         self.set_operations= ['+','-', '*','/']
-        self.n_genes=number_genes ## EL largo del set de numeros?
         self.pop_size=pop_size
         self.maxNum = 10
         self.maxInt = 21474836
@@ -78,17 +76,58 @@ class FitLinear:
         print("Best Individual", best_indv.imprimir(best_indv.getRaiz()))
         return max_fit,best_indv,fitnessList
 
-linear = FitLinear([[1,2],[2,6],[3,12],[4,20],[5,30]],2,10)
-linear.runGA()
+# linear = FitLinear([[1,2],[2,6],[3,12],[4,20],[5,30]],10)
+# linear.runGA()
 
-# hoja1 = Hoja('x')
-# hoja2 = Hoja(1)
-# nodo = Nodo()
 
-# linear.fitness_tree
-# arbol = des.sequence_bit_factory()
-# print(arbol.imprimir(arbol.getRaiz()))
-# des.runGA()
-#print(des.fitness_tree(arbol))
-#FitnessStudy(1000,25)
+# Variation of the max. fitness over the epoch
+def FitnessStudy(popSize):
+    a = FitLinear([[1,2],[2,6],[3,12],[4,20],[5,30]],popSize)
+    maxfit,bestindv,fitnessList = a.runGA()
+    iterationsList=list(range(len(fitnessList)))
+    plt.plot(iterationsList,fitnessList)
+    plt.title("FITNESS vs EPOCH")
+    plt.xlabel("N°EPOCH")
+    plt.ylabel("FITNESS")
+    plt.show()
+# Varation of the n° of the iterations using differents population size
 
+def PopulationStudy(popsizeInit,popsizeEnd):
+    
+    IterationList=[]
+    popSizeList=[]
+    for popSize in range(popsizeInit,popsizeEnd,10):
+        a = FitLinear([[1,21],[2,22],[3,23],[4,24],[5,25]],popSize)
+        maxfit,bestindv,fitnessList = a.runGA()
+        IterationList.append(len(fitnessList))
+        popSizeList.append(popSize)
+    plt.plot(popSizeList,IterationList)
+    plt.title("Population Size vs Max.EPOCH")
+    plt.xlabel("Size")
+    plt.ylabel("N°EPOCH")
+    plt.show()
+
+#FitnessStudy(30)
+#PopulationStudy(10,100)
+#[1,2],[2,6],[3,12],[4,20],[5,30],[6,42],[7,56],[8,72],[9,90]
+#[1,2],[2,6],[3,12],[4,20],[5,30]
+def Graph_Func(points):
+    xs = []
+    ys = []
+    for point in points:
+        xs.append(point[0])
+        ys.append(point[1])
+
+    a = FitLinear(points,10)
+    maxfit,bestindv,fitnessList = a.runGA()
+    y_prima=[]
+    for x in xs:
+        y_prima.append(bestindv.evaluatePoint(bestindv.getRaiz(),x))
+    plt.plot(xs,ys,'ro')
+    plt.plot(xs,y_prima)
+    plt.title("Function vs Points")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.show()
+
+#Graph_Func([[1,12],[2,16],[3,22],[4,30],[5,40],[6,52],[7,66],[8,82],[9,100]])

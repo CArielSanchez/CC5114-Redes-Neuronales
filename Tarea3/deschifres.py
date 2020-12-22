@@ -14,12 +14,11 @@ class Deschiffres:
     # number_genes: Its the umber of genes used(length of the secret word)
     # pop_size: Its the population size
 
-    def __init__(self,target_number,set_of_numbers,number_genes,pop_size):
+    def __init__(self,target_number,set_of_numbers,pop_size):
 
         self.target=target_number
         self.set_numbers = set_of_numbers
         self.set_operations= ['+','-', '*','/']
-        self.n_genes=number_genes ## EL largo del set de numeros?
         self.pop_size=pop_size
         self.maxInt = 21474836
         
@@ -73,9 +72,36 @@ class Deschiffres:
         print("Best Individual", best_indv.imprimir(best_indv.getRaiz()))
         return max_fit,best_indv,fitnessList
 
-des = Deschiffres(30,[1,2,3,4],4,20)
-# arbol = des.sequence_bit_factory()
-# print(arbol.imprimir(arbol.getRaiz()))
-des.runGA()
-#print(des.fitness_tree(arbol))
-#FitnessStudy(1000,25)
+# des = Deschiffres(30,[1,2,3,4],20)
+# # arbol = des.sequence_bit_factory()
+# # print(arbol.imprimir(arbol.getRaiz()))
+# des.runGA()
+
+# Variation of the max. fitness over the epoch
+def FitnessStudy(popSize):
+    a = Deschiffres(30,[1,2,3,4],popSize)
+    maxfit,bestindv,fitnessList = a.runGA()
+    iterationsList=list(range(len(fitnessList)))
+    plt.plot(iterationsList,fitnessList)
+    plt.title("FITNESS vs EPOCH")
+    plt.xlabel("N°EPOCH")
+    plt.ylabel("FITNESS")
+    plt.show()
+
+# Varation of the n° of the iterations using differents population size
+#FitnessStudy(20)
+def PopulationStudy(popsizeInit,popsizeEnd):
+    
+    IterationList=[]
+    popSizeList=[]
+    for popSize in range(popsizeInit,popsizeEnd,10):
+        a = Deschiffres(30,[1,2,3,4],popSize)
+        maxfit,bestindv,fitnessList = a.runGA()
+        IterationList.append(len(fitnessList))
+        popSizeList.append(popSize)
+    plt.plot(popSizeList,IterationList)
+    plt.title("Population Size vs Max.EPOCH")
+    plt.xlabel("Size")
+    plt.ylabel("N°EPOCH")
+    plt.show()
+PopulationStudy(10,100)

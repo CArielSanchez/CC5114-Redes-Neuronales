@@ -53,38 +53,48 @@ class GeneticAlgoritm:
         n_hojas_a=indA.getRaiz().numberHojas()
         n_hojas_b=indB.getRaiz().numberHojas()
 
-        n1 = random.randint(1,n_hojas_a-1)
-        n2 = random.randint(1,n_hojas_b-1)
+        n1 = random.randint(1,n_hojas_a)
+        n2 = random.randint(1,n_hojas_b)
         while(True):
             indv=self.crossover_aux(n1,n2,indA,indB)
             if(indv!=False):
                 break
-            if(n1==1):
+            if(n1==1 or n2==1):
                 if(self.fitness(indA)>self.fitness(indB)):
                     #print(indA.imprimir(indA.getRaiz()))
                     return indA.copy()
                 else:
                     #print(indB.imprimir(indA.getRaiz()))
                     return indB.copy()
-            n1 = random.randint(1,n_hojas_a-1)
-            n2 = random.randint(1,n_hojas_b-1)
+            n1 = random.randint(1,n_hojas_a)
+            n2 = random.randint(1,n_hojas_b)
         return indv
        
     def crossover_aux(self,n_hojas_a,n_hojas_b,indA,indB):
+        
         #print(n_hojas)
         arbolA=indA.copy()
         arbolB=indB.copy()
+        # print(n_hojas_a)
+        # print(n_hojas_b)
+        # print("arbol")
         # print("arbol A "+ arbolA.imprimir(arbolA.getRaiz()))
         # print("arbol B "+ arbolB.imprimir(arbolB.getRaiz()))
         n_a=arbolA.findNodo_nHojas(arbolA.getRaiz(),n_hojas_a)
         n_b=arbolB.findNodo_nHojas(arbolB.getRaiz(),n_hojas_b)
+        # print("nodos")
         # print(n_a)   
         # print(n_b)
         if(n_a!=None and n_b!=None):
+           #s print("entro!!!!!!!!!!!")
             #print("arbol inicial "+arbolA.imprimir(arbolA.getRaiz()))
-            arbolA.replaceNodo(arbolA.getRaiz(),n_a,n_b)
+            if(random.random() > 0.5):
+                arbolA.addRandomNodo(arbolA.getRaiz(),n_b)
+            else:
+                arbolA.replaceNodo(arbolA.getRaiz(),n_a,n_b)
             # print("arbol final "+arbolA.imprimir(arbolA.getRaiz()))
             return arbolA
+        
         return False
     # Mutate a gen of an individual using the mutate rate
 
