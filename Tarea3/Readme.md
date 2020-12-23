@@ -179,7 +179,9 @@ Para probar nuestro algoritmo genético, realizamos 2 tipos de estudios o experi
 ![Epoch vs Popsize](img/2_function_comparation_xx_x_10.png) 
 
 ## Analisis
-- Del grafico Fitness vs Epoch, se puede apreciar nuevamente casoss
+- Del grafico Fitness vs Epoch, se puede apreciar casos donde el fitness se comporta de manera extraña, produciendose maximos y minimos locales que difieren del comportamiento general. Esto puede solucionarse manteniendo en cada iteracion el individio que genera el valor del maximo fitness, de esta manera el grafico solo aumentaria su fitness con cada iteracion.
+- Del grafico Epoch vs Popsize se puede apreciar al igual que en el problema anterior, casos aislados donde la poblacion es baja y el numero de iteraciones para solucionar el problemma es considerablemente mas alto que en las poblaciones altas, donde ademas este se mantiene relativamente constante.
+- En los graficos de Function vs Points se pueden apreciar dos funciones, la primera llega al resultado exacto antes de las 1000 iteraciones, solucionando el problema, ya que cada punto pertenece a la funcion resultante. La segunda no logra solucionar el problema, sin embargo se puede observar que la funcion resultante es bastante cercana a lo esperado. Por lo que con un mayor numero de iteracion o poblacion podria llegar a solucionar el problema.
 # Librerias
 
 Las librerias utilizadas son: 
