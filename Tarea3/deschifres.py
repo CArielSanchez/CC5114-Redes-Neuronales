@@ -5,14 +5,17 @@ from arbol import *
 
 import matplotlib.pyplot as plt
 
-# Class to find the binary form of a int number
+# Class to find the combinations of operations and a sets of number given to find a number
 
 class Deschiffres:
 
-    # Contructor of a Binary, receives:
-    # number_to_convert: Its the number that we would like to convert
-    # number_genes: Its the umber of genes used(length of the secret word)
+    # Contructor of a Deschiffres, receives:
+    # target_number: Its the number that we would like to reach
+    # set_of_numbers: Its the numbers used to compute and reach the target number
     # pop_size: Its the population size
+
+    # Also the class has the atribbutes:
+    # maxInt: Its a number to replace inf.
 
     def __init__(self,target_number,set_of_numbers,pop_size):
 
@@ -24,9 +27,9 @@ class Deschiffres:
         
     
     
-    # Gets the fitness of an individual (of a set of bits)
+    # Gets the fitness of an individual (of a tree)
 
-    def fitness_tree(self, indv): ## Si evaluate tiene division por 0, podriamos tirarlo a infinito
+    def fitness_tree(self, indv):
         try:
             value = indv.evaluate(indv.getRaiz())
             fitness = self.maxInt - abs(self.target -  value)
@@ -35,7 +38,7 @@ class Deschiffres:
         finally:
             return fitness
         
-    # Generate a gen (from [0,1])
+    # Generate a nodo using the sets of numbers and operations
 
     def gen_factory(self):
         value1 = random.choice(self.set_numbers)
@@ -47,7 +50,7 @@ class Deschiffres:
         return nodo
 
 
-    # Generate an individual
+    # Generate an individual (tree) with the number of leafs equals to the len of the sets of numbers
 
     def sequence_bit_factory(self):
 
@@ -66,20 +69,16 @@ class Deschiffres:
     def runGA(self):
         selector = Roulette(self.fitness_tree)
         print("Numero a Obetener", self.target)
-        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.2,fitness=self.fitness_tree,geneFactory=self.gen_factory,individualFactory= self.sequence_bit_factory,maxIter=10000,selector=selector,terminationCondition = lambda f : f == self.maxInt, setsNumber  = self.set_numbers, setsOperations = self.set_operations)
+        ga = GeneticAlgoritm(self.pop_size,mutationRate=0.2,fitness=self.fitness_tree,geneFactory=self.gen_factory,individualFactory= self.sequence_bit_factory,maxIter=1000,selector=selector,terminationCondition = lambda f : f == self.maxInt, setsNumber  = self.set_numbers, setsOperations = self.set_operations)
         best_indv,max_fit,fitnessList= ga.run()
         print("Fit Value: ", max_fit)
         print("Best Individual", best_indv.imprimir(best_indv.getRaiz()))
         return max_fit,best_indv,fitnessList
 
-# des = Deschiffres(30,[1,2,3,4],20)
-# # arbol = des.sequence_bit_factory()
-# # print(arbol.imprimir(arbol.getRaiz()))
-# des.runGA()
 
 # Variation of the max. fitness over the epoch
-def FitnessStudy(popSize):
-    a = Deschiffres(30,[1,2,3,4],popSize)
+def FitnessStudy(popSize,targetNumber,setOfNumbers):
+    a = Deschiffres(targetNumber,setOfNumbers,popSize)
     maxfit,bestindv,fitnessList = a.runGA()
     iterationsList=list(range(len(fitnessList)))
     plt.plot(iterationsList,fitnessList)
@@ -89,13 +88,13 @@ def FitnessStudy(popSize):
     plt.show()
 
 # Varation of the n° of the iterations using differents population size
-#FitnessStudy(20)
-def PopulationStudy(popsizeInit,popsizeEnd):
+
+def PopulationStudy(popsizeInit,popsizeEnd,targetNumber,setOfNumbers):
     
     IterationList=[]
     popSizeList=[]
     for popSize in range(popsizeInit,popsizeEnd,10):
-        a = Deschiffres(30,[1,2,3,4],popSize)
+        a = Deschiffres(targetNumber,setOfNumbers,popSize)
         maxfit,bestindv,fitnessList = a.runGA()
         IterationList.append(len(fitnessList))
         popSizeList.append(popSize)
@@ -104,4 +103,7 @@ def PopulationStudy(popsizeInit,popsizeEnd):
     plt.xlabel("Size")
     plt.ylabel("N°EPOCH")
     plt.show()
-PopulationStudy(10,100)
+
+
+FitnessStudy(20,30,[1,2,3,4])
+PopulationStudy(10,100,30,[1,2,3,4])

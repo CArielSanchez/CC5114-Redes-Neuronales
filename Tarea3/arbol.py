@@ -1,33 +1,57 @@
 import random
 
+# Class to create nodo
+
 class Nodo:
+
+    # Contructor of the nodo, receives:
+    # valor: Its the valor of the nodo
+    # nodoIzquierdo: Its a reference of a nodo
+    # nodoDerecho: Its a reference of a nodo
+
     def __init__(self,valor,nodoIzquierdo,nodoDerecho):
 
         self.valor = valor
         self.nodoIzquierdo = nodoIzquierdo
         self.nodoDerecho = nodoDerecho
+
+    # Sets Value of the nodo
     
     def setValor(self, valor):
         self.valor = valor
 
+    # Checks it is leaf the nodo
+
     def soyHoja(self):
         return False
+
+    # Sets left nodo with a nodo
 
     def setNodoIzquierdo(self,nodoIzquierdo):
         self.nodoIzquierdo = nodoIzquierdo
 
+    # Sets right nodo with a nodo
+
     def setNodoDerecho(self,nodoDerecho):
         self.nodoDerecho = nodoDerecho
     
+    # Gets left nodo
+
     def getNodoIzq(self):
         return self.nodoIzquierdo
+
+    # Gets right nodo
 
     def getNodoDer(self):
         return self.nodoDerecho
 
+    # Gets value
+
     def getValor(self):
         return self.valor
     
+    # Returns number of leafs of the nodo
+
     def numberHojas(self):
         if self.soyHoja():
             return 1
@@ -37,19 +61,33 @@ class Nodo:
             return c
     
 
+# Hoja, its subclass of nodo
+
 class Hoja(Nodo):
+
+    # Contructor of the Hoja, receives:
+    # valor: Its the valor of the nodo
+    
     def __init__(self,valor):
         super().__init__(valor,None,None)
+
+    # Checks its is leaf
 
     def soyHoja(self):
         
         return True
 
-# Arbol de expresiones
+# Class Arbol to operate nodes
 
 class Arbol:
+
+    # Contructor of the Arbol, receives:
+    # raiz: Its the root of the tree
+
     def __init__(self,raiz):
         self.raiz = raiz
+
+    # Copy a nodo and his nodes
     
     def copyNodo(self,nodo):
         if nodo.soyHoja():
@@ -63,17 +101,22 @@ class Arbol:
             nuevoNodo = Nodo(operacion,nodoIzq,nodoDer)
             return nuevoNodo
     
+    # Add random nodo in a leaf
+
     def addRandomNodo(self, nodo_actual,nodo_final):
         if nodo_actual.soyHoja() :
             return True
         
         else:
             if(random.random() > 0.5):
-                if self.addRandomNodo(nodo_actual.getNodoIzq(),nodo_final): #Se fue a la izq
+                if self.addRandomNodo(nodo_actual.getNodoIzq(),nodo_final): 
                     nodo_actual.setNodoIzquierdo(nodo_final)
             else:
                 if self.addRandomNodo(nodo_actual.getNodoDer(),nodo_final):
                     nodo_actual.setNodoDerecho(nodo_final)
+
+    # Sets random nodo in a nodo that has 2 leaf
+
     def setRandomNodo(self, nodo_actual,nodo_final):
         if nodo_actual.getNodoDer().soyHoja() and nodo_actual.getNodoIzq().soyHoja():
             return True
@@ -82,25 +125,30 @@ class Arbol:
                 if self.setRandomNodo(nodo_actual.getNodoDer(),nodo_final):
                     nodo_actual.setNodoDerecho(nodo_final)
             elif(( nodo_actual.getNodoDer().soyHoja()) and (not nodo_actual.getNodoIzq().soyHoja())):
-                if self.setRandomNodo(nodo_actual.getNodoIzq(),nodo_final): #Se fue a la izq
+                if self.setRandomNodo(nodo_actual.getNodoIzq(),nodo_final):
                         nodo_actual.setNodoIzquierdo(nodo_final)
             else:
                 if(random.random() > 0.5):
-                    if self.setRandomNodo(nodo_actual.getNodoIzq(),nodo_final): #Se fue a la izq
+                    if self.setRandomNodo(nodo_actual.getNodoIzq(),nodo_final): 
                         nodo_actual.setNodoIzquierdo(nodo_final)
                 else:
                     if self.setRandomNodo(nodo_actual.getNodoDer(),nodo_final):
                         nodo_actual.setNodoDerecho(nodo_final)
+
+    # Sets random hoja
+
     def setRandomHoja(self,nodo_actual,value):
         if(nodo_actual.soyHoja()):
             nodo_actual.setValor(value)
         else:
             if(random.random() > 0.5):
-                self.setRandomHoja(nodo_actual.getNodoIzq(),value) #Se fue a la izq
+                self.setRandomHoja(nodo_actual.getNodoIzq(),value)
                     
             else:
                 self.setRandomHoja(nodo_actual.getNodoDer(),value)
-                    
+    
+    # Sets Random Operation in anyone nodo
+
     def setRandomOperation(self,nodo_actual,n_nodos,set_operations):
         if(nodo_actual.soyHoja()):
             pass
@@ -112,30 +160,23 @@ class Arbol:
                 operation=random.choice(operations)
                 nodo_actual.setValor(operation)
             elif(rand < n_nodos//2 ):
-                self.setRandomOperation(nodo_actual.getNodoIzq(),nodo_actual.getNodoIzq().numberHojas()-1,set_operations) #Se fue a la izq
+                self.setRandomOperation(nodo_actual.getNodoIzq(),nodo_actual.getNodoIzq().numberHojas()-1,set_operations) 
                     
             else:
                 self.setRandomOperation(nodo_actual.getNodoDer(),nodo_actual.getNodoDer().numberHojas()-1,set_operations)
-    
-    # def changeRandomValue(self, nodo_actual,nodo_final):
-    #     if nodo_actual.soyHoja() :
-    #         return True
-        
-    #     else:
-    #         if(random.random() > 0.5):
-    #             if self.addRandomNodo(nodo_actual.getNodoIzq(),nodo_final): #Se fue a la izq
-    #                 nodo_actual.setNodoIzquierdo(nodo_final)
-    #         else:
-    #             if self.addRandomNodo(nodo_actual.getNodoDer(),nodo_final):
-    #                 nodo_actual.setNodoDerecho(nodo_final)
+
+    # Copy an arbol
 
     def copy(self):
         copia = Arbol(self.copyNodo(self.raiz))
         return copia
 
+    # Gets Raiz (root)
+
     def getRaiz(self):
         return self.raiz
 
+    # Replace a Nodo given for another
     
     def replaceNodo(self,raiz, nodoIni,nodoFin):
         if raiz.soyHoja():
@@ -148,9 +189,9 @@ class Arbol:
             elif self.replaceNodo(raiz.getNodoDer(),nodoIni,nodoFin):
                 raiz.setNodoDerecho(nodoFin)
 
-    def findNodo_nHojas(self,nodo,numero_hojas): ##Cuidado que puede que la cantidad de hojas que se busca no sea exacta en el arbol.
-       
-          
+    # Find a Nodo with a certain number of hojas (leafs)
+
+    def findNodo_nHojas(self,nodo,numero_hojas): 
         if nodo.soyHoja():
             pass
         elif numero_hojas == nodo.numberHojas():
@@ -166,9 +207,9 @@ class Arbol:
                 self.findNodo_nHojas(nodoIzq, numero_hojas)
         
 
+    # Evaluate a nodo with only numbers in the leafs
 
     def evaluate(self,nodo):
-
         if nodo.soyHoja():
             return nodo.getValor()
         else:
@@ -189,9 +230,10 @@ class Arbol:
 
                 return nodoIzq/nodoDer
     
+    # Evaluate a three with numbers and 'x'
+
     def evaluatePoint(self,nodo,x):
         if nodo.soyHoja():
-            #print(nodo.getValor())
             if(nodo.getValor() == 'x'):
                 return x
             else:
@@ -213,6 +255,8 @@ class Arbol:
             elif operacion == '/':
                 return nodoIzq/nodoDer
         
+    # Returns a string of the tree
+
     def imprimir(self,nodo):
         try:
             if nodo.soyHoja():
@@ -225,54 +269,3 @@ class Arbol:
                 return '('+nodoIzq+operacion+nodoDer+')'
         except AttributeError:
             return "no soy nodo"
-
-# hoja1 = Hoja(1)
-# hoja2 = Hoja(2)
-# hoja3 = Hoja(3)
-# hoja4 = Hoja(4)
-# hoja5 = Hoja(1)
-
-
-# nodo1 = Nodo('+',hoja1,hoja2)
-# nodo2 = Nodo('*',hoja3,hoja4)
-# nodo3 = Nodo('/',hoja5,nodo2)
-
-# raiz = Nodo("-",nodo1,nodo3)
-
-# arbol = Arbol(raiz)
-
-# print(arbol.imprimir(arbol.getRaiz()))
-
-# arbol.setRandomHoja(arbol.getRaiz(),15)
-
-# print(arbol.imprimir(arbol.getRaiz()))
-
-# arbol.setRandomOperation(arbol.getRaiz(),arbol.getRaiz().numberHojas()-1,['+','-','*','/'])
-
-
-# print(arbol.imprimir(arbol.getRaiz()))
-
-
-
-# arbol2 = arbol.copy()
-
-# #hoja2.setValor(5)
-# arbol.getRaiz().setValor('+')
-
-# # print(arbol.evaluate(arbol.getRaiz()))
-# # print(arbol.imprimir(arbol.getRaiz()))
-# # print(arbol2.imprimir(arbol2.getRaiz()))
-
-# arbol.replaceNodo(arbol.getRaiz(),nodo2,nodo3)
-
-# print(arbol.imprimir(arbol.getRaiz()))
-
-# nodo4 = Nodo('-',hoja1,Hoja(2))
-
-# arbol.setRandomNodo(arbol.getRaiz(),nodo4)
-
-# print(arbol.imprimir(arbol.getRaiz()))
-
-# print(arbol.imprimir(arbol.findNodo_nHojas(arbol.getRaiz(),4)))
-# #print(nodo1.numberHojas())
-# #print(arbol.getRaiz().numberHojas())

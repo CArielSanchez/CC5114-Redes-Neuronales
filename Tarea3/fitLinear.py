@@ -4,14 +4,18 @@ from arbol import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Class to find the binary form of a int number
+# Class FitLinear to find the function that fits a set of points
 
 class FitLinear:
 
-    # Contructor of a Binary, receives:
-    # number_to_convert: Its the number that we would like to convert
-    # number_genes: Its the umber of genes used(length of the secret word)
+    # Contructor of a Fit linear, receives:
+    # set_of_points: Its the sets of the points that are used to find the function
     # pop_size: Its the population size
+
+    # Also the class has the atribbutes:
+    # set_operations: Are the operations allowed to compute
+    # maxNum: Its the max number allowed to compute, in this case the number to compute are [0,1,2,3,4,5,6,7,8,9]
+    # maxInt: Its a number to replace inf.
 
     def __init__(self,set_of_points,pop_size):
         self.set_points = set_of_points
@@ -22,10 +26,9 @@ class FitLinear:
         
     
     
-    # Gets the fitness of an individual (of a set of bits)
-    # (x,y) = (4,6)
+    # Gets the fitness of an individual (of an tree evaluated of each point)
 
-    def fitness_tree(self, indv): ## Si evaluate tiene division por 0, podriamos tirarlo a infinito
+    def fitness_tree(self, indv):
         try:
             fit = []
             for i in (self.set_points):
@@ -37,7 +40,7 @@ class FitLinear:
         finally:
             return fitness
         
-    # Generate a gen (from [0,1])
+    # Generate a random nodo with the number and 'x', and the sets of operations
 
     def gen_factory(self):
         lists=list(range(self.maxNum))
@@ -51,18 +54,12 @@ class FitLinear:
         return nodo
 
 
-    # Generate an individual
+    # Generate an individual with 1 node
 
     def sequence_bit_factory(self):
 
         raiz = self.gen_factory()
         arbol = Arbol(raiz)
-        # n_hojas = 2
-        # while n_hojas<len(self.n_genes):
-        #     nodo = self.gen_factory()
-        #     arbol.addRandomNodo(arbol.getRaiz(), nodo)
-        #     n_hojas +=1
-
         return arbol
 
     #Run the Genetical Algoritm, returns de best individual, his fits, and a list of the max. fitness over each iteration
@@ -76,13 +73,10 @@ class FitLinear:
         print("Best Individual", best_indv.imprimir(best_indv.getRaiz()))
         return max_fit,best_indv,fitnessList
 
-# linear = FitLinear([[1,2],[2,6],[3,12],[4,20],[5,30]],10)
-# linear.runGA()
-
 
 # Variation of the max. fitness over the epoch
-def FitnessStudy(popSize):
-    a = FitLinear([[1,2],[2,6],[3,12],[4,20],[5,30]],popSize)
+def FitnessStudy(popSize,points):
+    a = FitLinear(points,popSize)
     maxfit,bestindv,fitnessList = a.runGA()
     iterationsList=list(range(len(fitnessList)))
     plt.plot(iterationsList,fitnessList)
@@ -90,14 +84,15 @@ def FitnessStudy(popSize):
     plt.xlabel("N°EPOCH")
     plt.ylabel("FITNESS")
     plt.show()
+
 # Varation of the n° of the iterations using differents population size
 
-def PopulationStudy(popsizeInit,popsizeEnd):
+def PopulationStudy(popsizeInit,popsizeEnd,points):
     
     IterationList=[]
     popSizeList=[]
     for popSize in range(popsizeInit,popsizeEnd,10):
-        a = FitLinear([[1,21],[2,22],[3,23],[4,24],[5,25]],popSize)
+        a = FitLinear(points,popSize)
         maxfit,bestindv,fitnessList = a.runGA()
         IterationList.append(len(fitnessList))
         popSizeList.append(popSize)
@@ -107,10 +102,7 @@ def PopulationStudy(popsizeInit,popsizeEnd):
     plt.ylabel("N°EPOCH")
     plt.show()
 
-#FitnessStudy(30)
-#PopulationStudy(10,100)
-#[1,2],[2,6],[3,12],[4,20],[5,30],[6,42],[7,56],[8,72],[9,90]
-#[1,2],[2,6],[3,12],[4,20],[5,30]
+
 def Graph_Func(points):
     xs = []
     ys = []
@@ -130,4 +122,10 @@ def Graph_Func(points):
     plt.ylabel("y")
     plt.show()
 
-#Graph_Func([[1,12],[2,16],[3,22],[4,30],[5,40],[6,52],[7,66],[8,82],[9,100]])
+# Points pre sets:
+# [1,2],[2,6],[3,12],[4,20],[5,30],[6,42],[7,56],[8,72],[9,90]
+# [1,2],[2,6],[3,12],[4,20],[5,30]
+
+FitnessStudy(30,[[1,2],[2,6],[3,12],[4,20],[5,30]])
+PopulationStudy(10,100,[[1,21],[2,22],[3,23],[4,24],[5,25]])
+Graph_Func([[1,12],[2,16],[3,22],[4,30],[5,40],[6,52],[7,66],[8,82],[9,100]])
